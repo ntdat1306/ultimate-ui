@@ -14,8 +14,7 @@ type Story = StoryObj<typeof Button>;
 
 export const Primary: Story = (args: ButtonProps) => <Button {...args}>Button</Button>;
 Primary.args = {
-    variant: 'primary',
-    disabled: false,
+    variant: 'primary'
 };
 
 export const Secondary: Story = (args: ButtonProps) => <Button {...args}>Button</Button>;

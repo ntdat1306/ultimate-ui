@@ -2,8 +2,9 @@ import React from 'react';
 import isPropValid from '@emotion/is-prop-valid';
 import styled from '@emotion/styled';
 import { ButtonProps } from './Button.types';
+import ThemeContextProvider from '../../contexts/ThemeContext';
 
-const ButtonBase = styled.button({
+const ButtonBase = styled('button')<ButtonProps>({
     display: 'inline-flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -35,17 +36,28 @@ const ButtonBase = styled.button({
 
 const StyledButton = styled(ButtonBase, {
     shouldForwardProp: (prop) => isPropValid(prop),
-})((props: ButtonProps) => ({
-    ...(props.variant === 'primary' && { color: 'green' }),
-}));
+})(({ theme, ...props }) => {
+    console.log(props);
+    return {
+        minWidth: '4rem',
+        ...(props.size === 'small'
+            ? { padding: '0.25rem 0.5rem' }
+            : props.size === 'large'
+            ? { padding: '0.75rem 1.5rem' }
+            : { padding: '0.5rem 1rem' }),
+        ...(props.variant === 'primary' && { color: theme.palette.primary.main }),
+    };
+});
 
 const Button: React.FC<ButtonProps> = (props) => {
-    const { children, variant, size, disabled, ...other } = props;
+    const { children, variant = 'primary', size, disabled, ...other } = props;
 
     return (
-        <StyledButton variant={variant} size={size} disabled={disabled} {...other}>
-            {children}
-        </StyledButton>
+        <ThemeContextProvider>
+            <StyledButton variant={variant} size={size} disabled={disabled} {...other}>
+                {children}
+            </StyledButton>
+        </ThemeContextProvider>
     );
 };
 
