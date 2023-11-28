@@ -40,12 +40,24 @@ const StyledButton = styled(ButtonBase, {
     console.log(props);
     return {
         minWidth: '4rem',
+        borderRadius: '0.25rem',
+        fontWeight: '500',
         ...(props.size === 'small'
             ? { padding: '0.25rem 0.5rem' }
             : props.size === 'large'
             ? { padding: '0.75rem 1.5rem' }
             : { padding: '0.5rem 1rem' }),
-        ...(props.variant === 'primary' && { color: theme.palette.primary.main }),
+        ...(props.variant === 'primary' && {
+            color: theme.palette.primary.contrastText,
+            backgroundColor: theme.palette.primary.main,
+            '&:hover': {
+                backgroundColor: theme.palette.primary.dark,
+            },
+        }),
+        ...(props.variant === 'secondary' && {
+            color: theme.palette.secondary.contrastText,
+            backgroundColor: theme.palette.secondary.main,
+        }),
     };
 });
 

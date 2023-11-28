@@ -5,16 +5,16 @@ import * as colors from '../utils/colors';
 const theme = {
     palette: {
         primary: {
-            light: colors.grey,
-            main: '#3f50b5',
-            dark: '#002884',
+            light: colors.tailwind.blue[300],
+            main: colors.tailwind.blue[500],
+            dark: colors.tailwind.blue[700],
             contrastText: '#fff',
         },
         secondary: {
-            light: '#ff7961',
-            main: '#f44336',
-            dark: '#ba000d',
-            contrastText: '#000',
+            light: colors.tailwind.blue[100],
+            main: colors.tailwind.blue[300],
+            dark: colors.tailwind.blue[500],
+            contrastText: colors.tailwind.blue[700],
         },
     },
 };
