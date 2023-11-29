@@ -1,6 +1,6 @@
 {
     "name": "ultimate-ui",
-    "version": "1.0.10",
+    "version": "1.0.12",
     "license": "MIT",
     "scripts": {
         "rollup-build-lib": "rollup -c --bundleConfigAsCjs",

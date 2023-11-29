@@ -22,6 +22,11 @@ Secondary.args = {
     variant: 'secondary',
 };
 
+export const Outline: Story = (args: ButtonProps) => <Button {...args}>Button</Button>;
+Outline.args = {
+    variant: 'outline',
+};
+
 export const Disabled: Story = (args: ButtonProps) => <Button {...args}>Button</Button>;
 Disabled.args = {
     disabled: true,
