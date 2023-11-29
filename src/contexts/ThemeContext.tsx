@@ -1,8 +1,12 @@
 import React from 'react';
 import { ThemeProvider } from '@emotion/react';
-import { createTheme } from '../utils/styles';
+import { createTheme } from '@utils/styles';
 
-const theme = createTheme({});
+const theme = createTheme({
+    palette: {
+        mode: 'light',
+    },
+});
 
 console.log(theme);
 

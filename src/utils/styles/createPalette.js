@@ -8,7 +8,7 @@ export const light = {
     // The colors used to style the text.
     text: {
         // The most important text.
-        primary: 'rgba(0, 0, 0, 0.87)',
+        primary: colors.tailwind.common.black,
         // Secondary text.
         secondary: 'rgba(0, 0, 0, 0.6)',
         // Disabled text have even lower visual prominence.
@@ -27,8 +27,8 @@ export const light = {
         // The color of an active action like an icon button.
         active: 'rgba(0, 0, 0, 0.54)',
         // The color of an hovered action.
-        hover: 'rgba(0, 0, 0, 0.04)',
-        hoverOpacity: 0.04,
+        hover: 'rgba(0, 0, 0, 0.8)',
+        hoverOpacity: 0.8,
         // The color of a selected action.
         selected: 'rgba(0, 0, 0, 0.08)',
         selectedOpacity: 0.08,
@@ -57,8 +57,8 @@ export const dark = {
     },
     action: {
         active: colors.tailwind.common.white,
-        hover: 'rgba(255, 255, 255, 0.08)',
-        hoverOpacity: 0.08,
+        hover: 'rgba(255, 255, 255, 0.5)',
+        hoverOpacity: 0.5,
         selected: 'rgba(255, 255, 255, 0.16)',
         selectedOpacity: 0.16,
         disabled: 'rgba(255, 255, 255, 0.3)',
@@ -80,24 +80,24 @@ const getDefaultPrimary = (mode = 'light') => {
         };
     else
         return {
-            main: colors.tailwind.blue[200],
+            main: colors.tailwind.blue[100],
             light: colors.tailwind.blue[50],
-            dark: colors.tailwind.blue[400],
+            dark: colors.tailwind.blue[600],
         };
 };
 
 const getDefaultSecondary = (mode = 'light') => {
     if (mode === 'light')
         return {
-            light: colors.tailwind.blue[50],
-            main: colors.tailwind.blue[100],
-            dark: colors.tailwind.blue[200],
+            light: colors.tailwind.teal[100],
+            main: colors.tailwind.teal[200],
+            dark: colors.tailwind.teal[400],
         };
     else
         return {
-            main: colors.tailwind.blue[200],
-            light: colors.tailwind.blue[50],
-            dark: colors.tailwind.blue[400],
+            main: colors.tailwind.teal[100],
+            light: colors.tailwind.teal[50],
+            dark: colors.tailwind.teal[600],
         };
 };
 

@@ -1,6 +1,13 @@
-export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+export interface ButtonBaseProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     children?: React.ReactNode;
-    variant?: string;
-    size?: 'small' | 'large';
+    variant?: 'contained' | 'outline' | 'text';
+    size?: 'small' | 'medium' | 'large';
     color?: 'inherit' | 'primary' | 'secondary' | 'success' | 'error' | 'info' | 'warning';
+}
+
+export interface ButtonProps extends ButtonBaseProps {
+    children: React.ReactNode;
+    variant: 'contained' | 'outline' | 'text';
+    size: 'small' | 'medium' | 'large';
+    color: 'inherit' | 'primary' | 'secondary' | 'success' | 'error' | 'info' | 'warning';
 }

@@ -1,6 +1,7 @@
 import deepMerge from '../system/deepMerge';
 import createPalette from './createPalette';
 import createTypography from './createTypography';
+import shadows from './createShadow';
 
 // Theme composition: using theme options to define other options, eg below:
 // let theme = createTheme({
@@ -31,6 +32,11 @@ function createTheme(options = {}, ...args) {
         },
         {
             typography: createTypography(palette, typographyInput),
+            // Don't use [...shadows] until you've verified its transpiled code is not invoking the iterator protocol.
+            shadows: shadows.slice(),
+            shape: {
+                borderRadius: 4,
+            },
         }
     );
 

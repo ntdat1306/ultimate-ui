@@ -12,19 +12,19 @@ export default meta;
 
 type Story = StoryObj<typeof Button>;
 
-export const Primary: Story = (args: ButtonProps) => <Button {...args}>Button</Button>;
-Primary.args = {
-    variant: 'primary',
-};
-
-export const Secondary: Story = (args: ButtonProps) => <Button {...args}>Button</Button>;
-Secondary.args = {
-    variant: 'secondary',
+export const Contained: Story = (args: ButtonProps) => <Button {...args}>Button</Button>;
+Contained.args = {
+    variant: 'contained',
 };
 
 export const Outline: Story = (args: ButtonProps) => <Button {...args}>Button</Button>;
 Outline.args = {
     variant: 'outline',
+};
+
+export const Text: Story = (args: ButtonProps) => <Button {...args}>Button</Button>;
+Text.args = {
+    variant: 'text',
 };
 
 export const Disabled: Story = (args: ButtonProps) => <Button {...args}>Button</Button>;

@@ -1,8 +1,10 @@
 import React from 'react';
 import isPropValid from '@emotion/is-prop-valid';
 import styled from '@emotion/styled';
-import { ButtonProps } from './Button.types';
-import ThemeContextProvider from '../../contexts/ThemeContext';
+import { ButtonBaseProps, ButtonProps } from './Button.types';
+
+import { alpha } from '@utils/styles/colorManipulator';
+import ThemeContextProvider from '@contexts/ThemeContext';
 
 const ButtonBase = styled('button')<ButtonProps>({
     display: 'inline-flex',
@@ -36,11 +38,13 @@ const ButtonBase = styled('button')<ButtonProps>({
 
 const StyledButton = styled(ButtonBase, {
     shouldForwardProp: (prop) => isPropValid(prop),
-})(({ theme, ...props }) => {
+})<ButtonProps>(({ theme, ...props }) => {
+    console.log(props);
+
     return {
         ...theme.typography.button,
         minWidth: '4rem',
-        // borderRadius: `${theme.shape.borderRadius}rem`,
+        borderRadius: theme.shape.borderRadius,
         // Size
         ...(props.size === 'small'
             ? { padding: '0.25rem 0.5rem' }
@@ -48,38 +52,16 @@ const StyledButton = styled(ButtonBase, {
             ? { padding: '0.75rem 1.5rem' }
             : { padding: '0.5rem 1rem' }),
         // Primary
-        ...(props.variant === 'primary' && {
-            color: theme.palette.primary.contrastText,
-            backgroundColor: theme.palette.primary.main,
-            '&:hover': {
-                backgroundColor: theme.palette.primary.dark,
-            },
-        }),
-        // Secondary
-        ...(props.variant === 'secondary' && {
-            color: theme.palette.secondary.contrastText,
-            backgroundColor: theme.palette.secondary.main,
-            '&:hover': {
-                backgroundColor: theme.palette.secondary.dark,
-            },
-        }),
-        // Outline
-        ...(props.variant === 'outline' && {
-            color: theme.palette.primary.main,
-            backgroundColor: theme.palette.background.default,
-            border: `1px solid ${theme.palette.primary.main}`,
-            '&:hover': {
-                backgroundColor: theme.palette.secondary.light,
-            },
-        }),
-        // Ghost
-        ...(props.variant === 'ghost' && {
-            color: theme.palette.primary.main,
-            backgroundColor: theme.palette.background.default,
-            '&:hover': {
-                backgroundColor: theme.palette.secondary.light,
-            },
-        }),
+        ...(props.variant === 'contained' &&
+            props.color !== 'inherit' && {
+                color: theme.palette[props.color].contrastText,
+                backgroundColor: theme.palette[props.color].main,
+                border: `1px solid ${theme.palette[props.color].main}`,
+                '&:hover': {
+                    backgroundColor: alpha(theme.palette[props.color].main, theme.palette.action.hoverOpacity),
+                },
+            }),
+
         // Disabled
         ...(props.disabled && {
             color: theme.palette.action.disabled,
@@ -90,12 +72,12 @@ const StyledButton = styled(ButtonBase, {
     };
 });
 
-const Button: React.FC<ButtonProps> = (props) => {
-    const { children, variant = 'primary', size, disabled, ...other } = props;
+const Button: React.FC<ButtonBaseProps> = (props) => {
+    const { children, variant = 'contained', color = 'primary', size = 'medium', disabled, ...other } = props;
 
     return (
         <ThemeContextProvider>
-            <StyledButton variant={variant} size={size} disabled={disabled} {...other}>
+            <StyledButton variant={variant} color={color} size={size} disabled={disabled} {...other}>
                 {children}
             </StyledButton>
         </ThemeContextProvider>
