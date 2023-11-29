@@ -1,1 +1,1 @@
-export { default as createPalette } from './createPalette';
+export { default as createTheme } from './createTheme';

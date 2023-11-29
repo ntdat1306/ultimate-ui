@@ -1,17 +1,10 @@
 import React from 'react';
 import { ThemeProvider } from '@emotion/react';
-import * as colors from '../utils/colors';
-import { createPalette } from '../utils/styles';
+import { createTheme } from '../utils/styles';
 
-const theme = {
-    palette: createPalette({
-        primary: {
-            main: '#000',
-        },
-    }),
-};
+const theme = createTheme({});
 
-console.log(theme.palette);
+console.log(theme);
 
 interface ThemeContextProviderProps {
     children?: React.ReactNode;
