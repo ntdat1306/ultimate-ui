@@ -38,7 +38,7 @@ const StyledButton = styled(ButtonBase, {
     shouldForwardProp: (prop) => isPropValid(prop),
 })(({ theme, ...props }) => {
     return {
-        // ...theme.typography.button,
+        ...theme.typography.button,
         minWidth: '4rem',
         // borderRadius: `${theme.shape.borderRadius}rem`,
         // Size

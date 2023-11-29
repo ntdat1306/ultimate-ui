@@ -18,13 +18,13 @@ const defaultFontFamily = '"Roboto", "Helvetica", "Arial", sans-serif';
 export default function createTypography(palette, typography) {
     const {
         fontFamily = defaultFontFamily,
-        // The default font size of the Material Specification.
+        // The default font size
         fontSize = 14, // px
         fontWeightLight = 300,
         fontWeightRegular = 400,
         fontWeightMedium = 500,
         fontWeightBold = 700,
-        // Tell MUI what's the font-size on the html element.
+        // Tell what's the font-size on the html element.
         // 16px is the default font-size used by browsers.
         htmlFontSize = 16,
         // Apply the CSS properties to all the variants.
@@ -33,18 +33,8 @@ export default function createTypography(palette, typography) {
         ...other
     } = typeof typography === 'function' ? typography(palette) : typography;
 
-    if (process.env.NODE_ENV !== 'production') {
-        if (typeof fontSize !== 'number') {
-            console.error('MUI: `fontSize` is required to be a number.');
-        }
-
-        if (typeof htmlFontSize !== 'number') {
-            console.error('MUI: `htmlFontSize` is required to be a number.');
-        }
-    }
-
-    const coef = fontSize / 14;
-    const pxToRem = pxToRem2 || ((size) => `${(size / htmlFontSize) * coef}rem`);
+    const coefficient = fontSize / 14;
+    const pxToRem = pxToRem2 || ((size) => `${(size / htmlFontSize) * coefficient}rem`);
     const buildVariant = (fontWeight, size, lineHeight, letterSpacing, casing) => ({
         fontFamily,
         fontWeight,
