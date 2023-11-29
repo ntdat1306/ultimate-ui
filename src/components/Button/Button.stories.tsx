@@ -17,9 +17,9 @@ Contained.args = {
     variant: 'contained',
 };
 
-export const Outline: Story = (args: ButtonProps) => <Button {...args}>Button</Button>;
-Outline.args = {
-    variant: 'outline',
+export const Outlined: Story = (args: ButtonProps) => <Button {...args}>Button</Button>;
+Outlined.args = {
+    variant: 'outlined',
 };
 
 export const Text: Story = (args: ButtonProps) => <Button {...args}>Button</Button>;

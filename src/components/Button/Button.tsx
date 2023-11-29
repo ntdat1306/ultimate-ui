@@ -2,9 +2,9 @@ import React from 'react';
 import isPropValid from '@emotion/is-prop-valid';
 import styled from '@emotion/styled';
 import { ButtonBaseProps, ButtonProps } from './Button.types';
-
 import { alpha } from '@utils/styles/colorManipulator';
 import ThemeContextProvider from '@contexts/ThemeContext';
+import * as colors from '@utils/colors';
 
 const ButtonBase = styled('button')<ButtonProps>({
     display: 'inline-flex',
@@ -51,21 +51,45 @@ const StyledButton = styled(ButtonBase, {
             : props.size === 'large'
             ? { padding: '0.75rem 1.5rem' }
             : { padding: '0.5rem 1rem' }),
-        // Primary
+        // Contained
         ...(props.variant === 'contained' &&
             props.color !== 'inherit' && {
                 color: theme.palette[props.color].contrastText,
                 backgroundColor: theme.palette[props.color].main,
                 border: `1px solid ${theme.palette[props.color].main}`,
                 '&:hover': {
+                    backgroundColor: theme.palette[props.color].dark,
+                },
+            }),
+        // Outline
+        ...(props.variant === 'outlined' &&
+            props.color !== 'inherit' && {
+                color: theme.palette[props.color].main,
+                border: `1px solid ${theme.palette[props.color].main}`,
+                '&:hover': {
                     backgroundColor: alpha(theme.palette[props.color].main, theme.palette.action.hoverOpacity),
                 },
             }),
-
+        // Text
+        ...(props.variant === 'text' &&
+            props.color !== 'inherit' && {
+                color: theme.palette[props.color].main,
+                border: `1px solid transparent`,
+                '&:hover': {
+                    backgroundColor: alpha(theme.palette[props.color].main, theme.palette.action.hoverOpacity),
+                },
+            }),
+        // Inherit
+        ...(props.color === 'inherit' && {
+            color: 'inherit',
+            backgroundColor: colors.tailwind.gray[100],
+            border: `1px solid ${colors.tailwind.gray[100]}`,
+        }),
         // Disabled
         ...(props.disabled && {
             color: theme.palette.action.disabled,
             backgroundColor: theme.palette.action.disabledBackground,
+            border: `1px solid ${theme.palette.action.disabledBackground}`,
             '&:hover': 'none',
             pointerEvents: 'none',
         }),

@@ -8,7 +8,7 @@ export const light = {
     // The colors used to style the text.
     text: {
         // The most important text.
-        primary: colors.tailwind.common.black,
+        primary: 'rgba(0, 0, 0, 0.87)',
         // Secondary text.
         secondary: 'rgba(0, 0, 0, 0.6)',
         // Disabled text have even lower visual prominence.
@@ -27,8 +27,8 @@ export const light = {
         // The color of an active action like an icon button.
         active: 'rgba(0, 0, 0, 0.54)',
         // The color of an hovered action.
-        hover: 'rgba(0, 0, 0, 0.8)',
-        hoverOpacity: 0.8,
+        hover: 'rgba(0, 0, 0, 0.04)',
+        hoverOpacity: 0.04,
         // The color of a selected action.
         selected: 'rgba(0, 0, 0, 0.08)',
         selectedOpacity: 0.08,
@@ -57,8 +57,8 @@ export const dark = {
     },
     action: {
         active: colors.tailwind.common.white,
-        hover: 'rgba(255, 255, 255, 0.5)',
-        hoverOpacity: 0.5,
+        hover: 'rgba(255, 255, 255, 0.08)',
+        hoverOpacity: 0.08,
         selected: 'rgba(255, 255, 255, 0.16)',
         selectedOpacity: 0.16,
         disabled: 'rgba(255, 255, 255, 0.3)',
@@ -89,23 +89,23 @@ const getDefaultPrimary = (mode = 'light') => {
 const getDefaultSecondary = (mode = 'light') => {
     if (mode === 'light')
         return {
-            light: colors.tailwind.teal[100],
-            main: colors.tailwind.teal[200],
-            dark: colors.tailwind.teal[400],
+            main: colors.tailwind.indigo[500],
+            light: colors.tailwind.indigo[300],
+            dark: colors.tailwind.indigo[700],
         };
     else
         return {
-            main: colors.tailwind.teal[100],
-            light: colors.tailwind.teal[50],
-            dark: colors.tailwind.teal[600],
+            main: colors.tailwind.indigo[100],
+            light: colors.tailwind.indigo[50],
+            dark: colors.tailwind.indigo[600],
         };
 };
 
 const getDefaultSuccess = (mode = 'light') => {
     if (mode === 'light')
         return {
-            main: colors.tailwind.green[500],
-            light: colors.tailwind.green[300],
+            main: colors.tailwind.green[600],
+            light: colors.tailwind.green[500],
             dark: colors.tailwind.green[700],
         };
     else
@@ -119,8 +119,8 @@ const getDefaultSuccess = (mode = 'light') => {
 const getDefaultError = (mode = 'light') => {
     if (mode === 'light')
         return {
-            main: colors.tailwind.red[500],
-            light: colors.tailwind.red[300],
+            main: colors.tailwind.red[600],
+            light: colors.tailwind.red[500],
             dark: colors.tailwind.red[700],
         };
     else
@@ -134,8 +134,8 @@ const getDefaultError = (mode = 'light') => {
 const getDefaultInfo = (mode = 'light') => {
     if (mode === 'light')
         return {
-            main: colors.tailwind.cyan[500],
-            light: colors.tailwind.cyan[300],
+            main: colors.tailwind.cyan[600],
+            light: colors.tailwind.cyan[500],
             dark: colors.tailwind.cyan[700],
         };
     else
@@ -149,8 +149,8 @@ const getDefaultInfo = (mode = 'light') => {
 const getDefaultWarning = (mode = 'light') => {
     if (mode === 'light')
         return {
-            main: colors.tailwind.orange[500],
-            light: colors.tailwind.orange[300],
+            main: colors.tailwind.orange[600],
+            light: colors.tailwind.orange[500],
             dark: colors.tailwind.orange[700],
         };
     else
