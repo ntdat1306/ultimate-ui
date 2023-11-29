@@ -1,3 +1,4 @@
+// https://github.com/mui/material-ui/blob/master/packages/mui-material/src/styles/createPalette.js#L79
 import * as colors from '../colors';
 
 // Default mode
@@ -158,20 +159,8 @@ const getDefaultWarning = (mode = 'light') => {
         };
 };
 
-// Using function augmentColor below to generate color if palette lack of color
-const augmentColor = ({ color, name, mainShade = 500, lightShade = 300, darkShade = 700 }: any) => {
-    color = { ...color };
-    console.log(color[mainShade]);
-    // If color don't have main but have mainShade
-    if (!color.main && color[mainShade]) {
-        color.main = color[mainShade];
-    }
-
-    // if (!color.hasOwnProperty('main'))
-    //     throw new Error('The color object needs to have a `main` property or a `mainShade` property.');
-};
-
-const createPalette = (palette: any) => {
+// Main function
+const createPalette = (palette) => {
     const { mode = 'light', contrastThreshold = 3, tonalOffset = 0.2, ...other } = palette;
 
     const primary = palette.primary || getDefaultPrimary(mode);
@@ -181,14 +170,61 @@ const createPalette = (palette: any) => {
     const info = palette.info || getDefaultInfo(mode);
     const warning = palette.warning || getDefaultWarning(mode);
 
+    const addLightOrDark = (intent, direction, shade, tonalOffset) => {
+        const tonalOffsetLight = tonalOffset.light || tonalOffset;
+        const tonalOffsetDark = tonalOffset.dark || tonalOffset * 1.5;
+
+        // Check if intent don't have `light` or `dark` value
+        // Notice: shade default is `300` or `700` (view augmentColor() in below)
+        if (!intent[direction]) {
+            if (intent.hasOwnProperty(shade)) {
+                intent[direction] = intent[shade];
+            } else if (direction === 'light') {
+                // intent.light = lighten(intent.main, tonalOffsetLight);
+            } else if (direction === 'dark') {
+                // intent.dark = darken(intent.main, tonalOffsetDark);
+            }
+        }
+    };
+
+    // Using function augmentColor below to generate color if palette lack of color
+    const augmentColor = ({ color, name, mainShade = 500, lightShade = 300, darkShade = 700 }) => {
+        // If color don't have main but have mainShade (default 500)
+        // | primary: {                | primary: {
+        // |     500: '#fff',    =>    |     500: '#fff',
+        // | },                        |     main: 'fff'
+        //                             | },
+        if (!color.main && color[mainShade]) {
+            color.main = color[mainShade];
+        }
+
+        // Check error
+        if (!color.hasOwnProperty('main'))
+            throw new Error(
+                `UUI: The color${name ? ` (${name})` : ''} provided to augmentColor(color) is invalid.\n` +
+                    `The color object needs to have a \`main\` property or a \`${mainShade}\` property.`
+            );
+
+        if (typeof color.main !== 'string')
+            throw new Error(
+                `UUI: The color${name ? ` (${name})` : ''} provided to augmentColor(color) is invalid.\n` +
+                    `\`color.main\` should be a string, but \`${JSON.stringify(color.main)}\` was provided instead.`
+            );
+
+        // Add light and dark color
+        addLightOrDark(color, 'light', lightShade, tonalOffset);
+        addLightOrDark(color, 'dark', darkShade, tonalOffset);
+
+        return color;
+    };
+
     const paletteOutput = {
-        primary: augmentColor({ color: primary, name: 'primary', mainShade: 'A400' }),
+        primary: augmentColor({ color: primary, name: 'primary' }),
         // secondary,
         // success,
         // error,
         // info,
         // warning,
-        ...other,
     };
 
     return paletteOutput;

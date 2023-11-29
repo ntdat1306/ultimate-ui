@@ -3,7 +3,7 @@ import isPropValid from '@emotion/is-prop-valid';
 import styled from '@emotion/styled';
 import { ButtonProps } from './Button.types';
 import ThemeContextProvider from '../../contexts/ThemeContext';
-import createPalette from '../../utils/styles/createPalette';
+import { createPalette } from '../../utils/styles';
 
 const ButtonBase = styled('button')<ButtonProps>({
     display: 'inline-flex',
@@ -95,10 +95,9 @@ const Button: React.FC<ButtonProps> = (props) => {
     const { children, variant = 'primary', size, disabled, ...other } = props;
     const theme = createPalette({
         primary: {
-            light: 'red',
-            // main: 'green',
-            dark: 'blue',
-            200: 'red',
+            500: '#fff',
+            300: '#dddddd',
+            main: 'fff',
         },
     });
     console.log(theme);
