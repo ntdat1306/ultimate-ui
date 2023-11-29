@@ -1,6 +1,6 @@
 {
     "name": "ultimate-ui",
-    "version": "1.0.12",
+    "version": "1.0.16",
     "license": "MIT",
     "scripts": {
         "rollup-build-lib": "rollup -c --bundleConfigAsCjs",
@@ -14,6 +14,7 @@
     ],
     "types": "dist/index.d.ts",
     "devDependencies": {
+        "@rollup/plugin-alias": "^5.1.0",
         "@rollup/plugin-commonjs": "^25.0.7",
         "@rollup/plugin-node-resolve": "^15.2.3",
         "@rollup/plugin-terser": "^0.4.4",
