@@ -3,7 +3,6 @@ import isPropValid from '@emotion/is-prop-valid';
 import styled from '@emotion/styled';
 import { ButtonProps } from './Button.types';
 import ThemeContextProvider from '../../contexts/ThemeContext';
-import { createPalette } from '../../utils/styles';
 
 const ButtonBase = styled('button')<ButtonProps>({
     display: 'inline-flex',
@@ -39,9 +38,9 @@ const StyledButton = styled(ButtonBase, {
     shouldForwardProp: (prop) => isPropValid(prop),
 })(({ theme, ...props }) => {
     return {
-        ...theme.typography.button,
+        // ...theme.typography.button,
         minWidth: '4rem',
-        borderRadius: `${theme.shape.borderRadius}rem`,
+        // borderRadius: `${theme.shape.borderRadius}rem`,
         // Size
         ...(props.size === 'small'
             ? { padding: '0.25rem 0.5rem' }
@@ -93,14 +92,6 @@ const StyledButton = styled(ButtonBase, {
 
 const Button: React.FC<ButtonProps> = (props) => {
     const { children, variant = 'primary', size, disabled, ...other } = props;
-    const theme = createPalette({
-        primary: {
-            500: '#fff',
-            300: '#dddddd',
-            main: 'fff',
-        },
-    });
-    console.log(theme);
 
     return (
         <ThemeContextProvider>

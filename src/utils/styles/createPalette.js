@@ -1,5 +1,7 @@
 // https://github.com/mui/material-ui/blob/master/packages/mui-material/src/styles/createPalette.js#L79
 import * as colors from '../colors';
+import { lighten, darken, getContrastRatio } from './colorManipulator';
+import deepMerge from '../system/deepMerge';
 
 // Default mode
 export const light = {
@@ -180,11 +182,20 @@ const createPalette = (palette) => {
             if (intent.hasOwnProperty(shade)) {
                 intent[direction] = intent[shade];
             } else if (direction === 'light') {
-                // intent.light = lighten(intent.main, tonalOffsetLight);
+                intent.light = lighten(intent.main, tonalOffsetLight);
             } else if (direction === 'dark') {
-                // intent.dark = darken(intent.main, tonalOffsetDark);
+                intent.dark = darken(intent.main, tonalOffsetDark);
             }
         }
+    };
+
+    const getContrastText = (background) => {
+        const contrastText =
+            getContrastRatio(background, dark.text.primary) >= contrastThreshold
+                ? dark.text.primary
+                : light.text.primary;
+
+        return contrastText;
     };
 
     // Using function augmentColor below to generate color if palette lack of color
@@ -215,17 +226,51 @@ const createPalette = (palette) => {
         addLightOrDark(color, 'light', lightShade, tonalOffset);
         addLightOrDark(color, 'dark', darkShade, tonalOffset);
 
+        // Add contrast
+        if (!color.contrastText) {
+            color.contrastText = getContrastText(color.main);
+        }
+
         return color;
     };
 
-    const paletteOutput = {
-        primary: augmentColor({ color: primary, name: 'primary' }),
-        // secondary,
-        // success,
-        // error,
-        // info,
-        // warning,
-    };
+    // Get mode
+    const modes = { light: light, dark: dark };
+
+    // Output
+    const paletteOutput = deepMerge(
+        {
+            // A collection of common colors.
+            common: { ...colors.tailwind.common }, // prevent mutable object.
+            // The palette mode, can be light or dark.
+            mode,
+            // The colors used to represent primary interface elements for a user.
+            primary: augmentColor({ color: primary, name: 'primary' }),
+            // The colors used to represent secondary interface elements for a user.
+            secondary: augmentColor({ color: secondary, name: 'secondary' }),
+            // The colors used to represent interface elements that the user should be made aware of.
+            error: augmentColor({ color: error, name: 'error' }),
+            // The colors used to represent potentially dangerous actions or important messages.
+            warning: augmentColor({ color: warning, name: 'warning' }),
+            // The colors used to present information to the user that is neutral and not necessarily important.
+            info: augmentColor({ color: info, name: 'info' }),
+            // The colors used to indicate the successful completion of an action that user triggered.
+            success: augmentColor({ color: success, name: 'success' }),
+            // Used by `getContrastText()` to maximize the contrast between
+            // the background and the text.
+            contrastThreshold,
+            // Takes a background color and returns the text color that maximizes the contrast.
+            getContrastText,
+            // Generate a rich color object.
+            augmentColor,
+            // Used by the functions below to shift a color's luminance by approximately
+            // two indexes within its tonal palette.
+            // E.g., shift from Red 500 to Red 300 or Red 700.
+            tonalOffset,
+            ...modes[mode],
+        },
+        other
+    );
 
     return paletteOutput;
 };
