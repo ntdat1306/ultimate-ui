@@ -5,3 +5,5 @@
 -   Using alias
     https://blog.logrocket.com/using-path-aliases-cleaner-react-typescript-imports/
     https://dev.to/tilly/aliasing-in-vite-w-typescript-1lfo
+-   HTML Element
+    https://html.spec.whatwg.org/multipage/indices.html#elements-3

@@ -1,7 +1,7 @@
 import React from 'react';
 import isPropValid from '@emotion/is-prop-valid';
 import styled from '@emotion/styled';
-import { ButtonBaseProps, ButtonProps } from './Button.types';
+import { ButtonProps } from './Button.types';
 import { alpha } from '@utils/styles/colorManipulator';
 import ThemeContextProvider from '@contexts/ThemeContext';
 import * as colors from '@utils/colors';
@@ -142,7 +142,7 @@ const StyledButton = styled(ButtonBase, {
     };
 });
 
-const Button: React.FC<ButtonBaseProps> = (props) => {
+const Button: React.FC<ButtonProps> = (props) => {
     const { children, variant = 'contained', color = 'primary', size = 'medium', href, ...other } = props;
 
     return (
