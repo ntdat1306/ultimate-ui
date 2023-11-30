@@ -6,7 +6,7 @@ import { alpha } from '@utils/styles/colorManipulator';
 import ThemeContextProvider from '@contexts/ThemeContext';
 import * as colors from '@utils/colors';
 
-const ButtonBase = styled('button')<ButtonProps>({
+const ButtonBase = styled('button')({
     display: 'inline-flex',
     alignItems: 'center',
     justifyContent: 'center',
