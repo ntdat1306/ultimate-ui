@@ -27,6 +27,11 @@ Text.args = {
     variant: 'text',
 };
 
+export const Link: Story = (args: ButtonProps) => <Button {...args}>Button</Button>;
+Link.args = {
+    href: 'https://emotion.sh/docs/styled',
+};
+
 export const Disabled: Story = (args: ButtonProps) => <Button {...args}>Button</Button>;
 Disabled.args = {
     disabled: true,

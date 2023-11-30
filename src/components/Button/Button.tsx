@@ -45,6 +45,7 @@ const StyledButton = styled(ButtonBase, {
         ...theme.typography.button,
         minWidth: '4rem',
         borderRadius: theme.shape.borderRadius,
+        textDecoration: 'none',
         // Size
         ...(props.size === 'small'
             ? { padding: '0.25rem 0.5rem' }
@@ -142,11 +143,11 @@ const StyledButton = styled(ButtonBase, {
 });
 
 const Button: React.FC<ButtonBaseProps> = (props) => {
-    const { children, variant = 'contained', color = 'primary', size = 'medium', ...other } = props;
+    const { children, variant = 'contained', color = 'primary', size = 'medium', href, ...other } = props;
 
     return (
         <ThemeContextProvider>
-            <StyledButton variant={variant} color={color} size={size} {...other}>
+            <StyledButton variant={variant} color={color} size={size} as={href ? 'a' : 'button'} href={href} {...other}>
                 {children}
             </StyledButton>
         </ThemeContextProvider>
