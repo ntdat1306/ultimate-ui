@@ -1,7 +1,7 @@
 import React from 'react';
 import isPropValid from '@emotion/is-prop-valid';
 import styled from '@emotion/styled';
-import { ButtonProps, StyledButtonProps } from './Button.types';
+import { ButtonProps, ButtonRef, StyledButtonProps } from './Button.types';
 import { alpha } from '@utils/styles/colorManipulator';
 import ThemeContextProvider from '@contexts/ThemeContext';
 import * as colors from '@utils/colors';
@@ -142,23 +142,30 @@ const StyledButton = styled(ButtonBase, {
     };
 });
 
-const Button = <E extends React.ElementType = 'button'>({
-    children,
-    as,
-    variant = 'contained',
-    color = 'primary',
-    size = 'medium',
-    ...other
-}: ButtonProps<E>) => {
+const Button = React.forwardRef(<E extends React.ElementType = 'button'>(props: ButtonProps<E>, ref?: ButtonRef<E>) => {
+    const { children, as, variant = 'contained', color = 'primary', size = 'medium', ...other } = props;
     const tag = as || 'button';
-
+    
     return (
         <ThemeContextProvider>
-            <StyledButton variant={variant} color={color} size={size} as={tag} {...other}>
+            <StyledButton variant={variant} color={color} size={size} as={tag} ref={ref} {...other}>
                 {children}
             </StyledButton>
         </ThemeContextProvider>
     );
-};
+});
+
+// const Button = <E extends React.ElementType = 'button'>(props: ButtonProps<E>) => {
+//     const { children, as, variant = 'contained', color = 'primary', size = 'medium', ...other } = props;
+
+//     const tag = as || 'button';
+//     return (
+//         <ThemeContextProvider>
+//             <StyledButton variant={variant} color={color} size={size} as={tag} {...other}>
+//                 {children}
+//             </StyledButton>
+//         </ThemeContextProvider>
+//     );
+// };
 
 export default Button;
