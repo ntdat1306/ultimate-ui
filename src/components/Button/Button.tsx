@@ -145,7 +145,7 @@ const StyledButton = styled(ButtonBase, {
 const Button = React.forwardRef(<E extends React.ElementType = 'button'>(props: ButtonProps<E>, ref?: ButtonRef<E>) => {
     const { children, as, variant = 'contained', color = 'primary', size = 'medium', ...other } = props;
     const tag = as || 'button';
-    
+
     return (
         <ThemeContextProvider>
             <StyledButton variant={variant} color={color} size={size} as={tag} ref={ref} {...other}>
