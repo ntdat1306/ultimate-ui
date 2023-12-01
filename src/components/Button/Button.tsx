@@ -39,8 +39,6 @@ const ButtonBase = styled('button')({
 const StyledButton = styled(ButtonBase, {
     shouldForwardProp: (prop) => isPropValid(prop),
 })<StyledButtonProps>(({ theme, ...props }) => {
-    console.log(props);
-
     return {
         ...theme.typography.button,
         minWidth: '4rem',
