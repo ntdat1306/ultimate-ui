@@ -142,30 +142,31 @@ const StyledButton = styled(ButtonBase, {
     };
 });
 
-const Button = React.forwardRef(<E extends React.ElementType = 'button'>(props: ButtonProps<E>, ref?: ButtonRef<E>) => {
-    const { children, as, variant = 'contained', color = 'primary', size = 'medium', ...other } = props;
-    const tag = as || 'button';
-
-    return (
-        <ThemeContextProvider>
-            <StyledButton variant={variant} color={color} size={size} as={tag} ref={ref} {...other}>
-                {children}
-            </StyledButton>
-        </ThemeContextProvider>
-    );
-});
-
-// const Button = <E extends React.ElementType = 'button'>(props: ButtonProps<E>) => {
+// forwardRef will be deprecated soon
+// const Button = React.forwardRef(<E extends React.ElementType = 'button'>(props: ButtonProps<E>, ref?: ButtonRef<E>) => {
 //     const { children, as, variant = 'contained', color = 'primary', size = 'medium', ...other } = props;
-
 //     const tag = as || 'button';
+
 //     return (
 //         <ThemeContextProvider>
-//             <StyledButton variant={variant} color={color} size={size} as={tag} {...other}>
+//             <StyledButton variant={variant} color={color} size={size} as={tag} ref={ref} {...other}>
 //                 {children}
 //             </StyledButton>
 //         </ThemeContextProvider>
 //     );
-// };
+// });
+
+const Button = <E extends React.ElementType = 'button'>(props: ButtonProps<E>) => {
+    const { children, as, variant = 'contained', color = 'primary', size = 'medium', refElement, ...other } = props;
+    const tag = as || 'button';
+
+    return (
+        <ThemeContextProvider>
+            <StyledButton variant={variant} color={color} size={size} as={tag} ref={refElement} {...other}>
+                {children}
+            </StyledButton>
+        </ThemeContextProvider>
+    );
+};
 
 export default Button;
