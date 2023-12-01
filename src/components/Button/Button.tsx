@@ -1,7 +1,7 @@
 import React from 'react';
 import isPropValid from '@emotion/is-prop-valid';
 import styled from '@emotion/styled';
-import { ButtonProps } from './Button.types';
+import { ButtonProps, StyledButtonProps } from './Button.types';
 import { alpha } from '@utils/styles/colorManipulator';
 import ThemeContextProvider from '@contexts/ThemeContext';
 import * as colors from '@utils/colors';
@@ -38,7 +38,7 @@ const ButtonBase = styled('button')({
 
 const StyledButton = styled(ButtonBase, {
     shouldForwardProp: (prop) => isPropValid(prop),
-})<ButtonProps>(({ theme, ...props }) => {
+})<StyledButtonProps>(({ theme, ...props }) => {
     console.log(props);
 
     return {
@@ -142,12 +142,19 @@ const StyledButton = styled(ButtonBase, {
     };
 });
 
-const Button: React.FC<ButtonProps> = (props) => {
-    const { children, variant = 'contained', color = 'primary', size = 'medium', href, ...other } = props;
+const Button = <E extends React.ElementType = 'button'>({
+    children,
+    as,
+    variant = 'contained',
+    color = 'primary',
+    size = 'medium',
+    ...other
+}: ButtonProps<E>) => {
+    const tag = as || 'button';
 
     return (
         <ThemeContextProvider>
-            <StyledButton variant={variant} color={color} size={size} as={href ? 'a' : 'button'} href={href} {...other}>
+            <StyledButton variant={variant} color={color} size={size} as={tag} {...other}>
                 {children}
             </StyledButton>
         </ThemeContextProvider>

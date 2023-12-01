@@ -7,3 +7,5 @@
     https://dev.to/tilly/aliasing-in-vite-w-typescript-1lfo
 -   HTML Element
     https://html.spec.whatwg.org/multipage/indices.html#elements-3
+-   Polymorphic Components (For Button Components)
+    https://www.youtube.com/watch?v=uZ8GZm5KEXY
