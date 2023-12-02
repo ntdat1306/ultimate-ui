@@ -8,6 +8,8 @@ const theme = createTheme({
     },
 });
 
+console.log(theme);
+
 interface ThemeContextProviderProps {
     children?: React.ReactNode;
 }

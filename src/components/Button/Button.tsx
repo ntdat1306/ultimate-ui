@@ -1,7 +1,7 @@
 import React from 'react';
 import isPropValid from '@emotion/is-prop-valid';
 import styled from '@emotion/styled';
-import { ButtonProps, ButtonRef, StyledButtonProps } from './Button.types';
+import { ButtonIconProps, ButtonProps, ButtonRef, StyledButtonProps } from './Button.types';
 import { alpha } from '@utils/styles/colorManipulator';
 import ThemeContextProvider from '@contexts/ThemeContext';
 import * as colors from '@utils/colors';
@@ -140,28 +140,73 @@ const StyledButton = styled(ButtonBase, {
     };
 });
 
-// forwardRef will be deprecated soon
-// const Button = React.forwardRef(<E extends React.ElementType = 'button'>(props: ButtonProps<E>, ref?: ButtonRef<E>) => {
-//     const { children, as, variant = 'contained', color = 'primary', size = 'medium', ...other } = props;
-//     const tag = as || 'button';
+const IconBase = styled('svg')({
+    display: 'inline-block',
+    width: '1em',
+    height: '1em',
+    fill: 'currentcolor',
+    userSelect: 'none',
+    '-webkit-user-select': 'none',
+    '-moz-user-select': 'none',
+    '-ms-user-select': 'none',
+    flexShrink: 0,
+    '-webkit-flex-shrink': 0,
+    '-ms-flex-negative': 0,
+});
 
-//     return (
-//         <ThemeContextProvider>
-//             <StyledButton variant={variant} color={color} size={size} as={tag} ref={ref} {...other}>
-//                 {children}
-//             </StyledButton>
-//         </ThemeContextProvider>
-//     );
-// });
+const StyledStartIcon = styled(IconBase)<ButtonIconProps>(({ theme, ...props }) => {
+    return {
+        ...(props.size === 'small'
+            ? { fontSize: '1.125rem', marginRight: '0.125rem' }
+            : props.size === 'large'
+            ? { fontSize: '1.5rem', marginRight: '0.375rem' }
+            : { fontSize: '1.25rem', marginRight: '0.25rem' }),
+    };
+});
+
+const StyledEndIcon = styled(IconBase)<ButtonIconProps>(({ theme, ...props }) => {
+    return {
+        ...(props.size === 'small'
+            ? { fontSize: '1.125rem', marginLeft: '0.125rem' }
+            : props.size === 'large'
+            ? { fontSize: '1.5rem', marginLeft: '0.375rem' }
+            : { fontSize: '1.25rem', marginLeft: '0.25rem' }),
+    };
+});
 
 const Button = <E extends React.ElementType = 'button'>(props: ButtonProps<E>) => {
-    const { children, as, variant = 'contained', color = 'primary', size = 'medium', refElement, ...other } = props;
+    const {
+        children,
+        as,
+        variant = 'contained',
+        color = 'primary',
+        size = 'medium',
+        refElement,
+        startIcon,
+        endIcon,
+        ...other
+    } = props;
     const tag = as || 'button';
+    const startIconProps = startIcon?.props;
+    const endIconProps = endIcon?.props;
 
     return (
         <ThemeContextProvider>
             <StyledButton variant={variant} color={color} size={size} as={tag} ref={refElement} {...other}>
+                {/* Start icon */}
+                {startIcon && startIconProps && (
+                    <StyledStartIcon size={size} {...startIconProps}>
+                        {startIconProps.children}
+                    </StyledStartIcon>
+                )}
+                {/* Children */}
                 {children}
+                {/* End icon */}
+                {endIcon && endIconProps && (
+                    <StyledEndIcon size={size} {...endIconProps}>
+                        {endIconProps.children}
+                    </StyledEndIcon>
+                )}
             </StyledButton>
         </ThemeContextProvider>
     );

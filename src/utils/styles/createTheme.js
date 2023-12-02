@@ -1,6 +1,7 @@
 import deepMerge from '../system/deepMerge';
 import createPalette from './createPalette';
 import createTypography from './createTypography';
+import createTransitions from './createTransitions';
 import shadows from './createShadow';
 
 // Theme composition: using theme options to define other options, eg below:
@@ -24,7 +25,13 @@ import shadows from './createShadow';
 // });
 
 function createTheme(options = {}, ...args) {
-    const { palette: paletteInput = {}, typography: typographyInput = {}, ...other } = options;
+    const {
+        palette: paletteInput = {},
+        typography: typographyInput = {},
+        transitions: transitionsInput = {},
+        ...other
+    } = options;
+
     const palette = createPalette(paletteInput);
     let uuiTheme = deepMerge(
         {
@@ -32,6 +39,7 @@ function createTheme(options = {}, ...args) {
         },
         {
             typography: createTypography(palette, typographyInput),
+            transitions: createTransitions(transitionsInput),
             // Don't use [...shadows] until you've verified its transpiled code is not invoking the iterator protocol.
             shadows: shadows.slice(),
             shape: {
