@@ -6,7 +6,6 @@ import { alpha } from '@utils/styles/colorManipulator';
 import ThemeContextProvider from '@contexts/ThemeContext';
 import * as colors from '@utils/colors';
 import useRipple from '@hooks/useRipple';
-import './Button.style.css';
 
 const ButtonBase = styled('button')({
     display: 'inline-flex',

@@ -2,6 +2,30 @@
 
 import React, { useEffect, useState } from 'react';
 import { useDebounce } from './useDebounce';
+import styled from '@emotion/styled';
+import isPropValid from '@emotion/is-prop-valid';
+import { keyframes } from '@emotion/react';
+
+const ripple = keyframes`
+    to {
+        transform: scale(4);
+        opacity: 0;
+    }
+`;
+
+const StyledSpan = styled('span', {
+    shouldForwardProp: (prop) => isPropValid(prop),
+})(({ theme, ...props }) => {
+    return {
+        position: 'absolute',
+        backgroundColor: '#FFFFFF',
+        opacity: '25%',
+        transform: 'scale(0)',
+        // add ripple animation from styles.css
+        animation: `${ripple} 600ms linear`,
+        borderRadius: '50%',
+    };
+});
 
 /**
  * This hook accepts a ref to any element and adds a click event handler that creates ripples when click
@@ -57,22 +81,7 @@ const useRipple = <T extends HTMLElement>(ref: React.RefObject<T>) => {
     //map through the ripples and return span elements.
     //this will be added to the button component later
     return ripples?.map((style, i) => {
-        return (
-            <span
-                key={i}
-                style={{
-                    ...style,
-                    //should be absolutely positioned
-                    position: 'absolute',
-                    backgroundColor: '#FFFFFF',
-                    opacity: '25%',
-                    transform: 'scale(0)',
-                    // add ripple animation from styles.css
-                    animation: 'ripple 600ms linear',
-                    borderRadius: '50%',
-                }}
-            />
-        );
+        return <StyledSpan key={i} style={{ ...style }} />;
     });
 };
 
