@@ -9,3 +9,5 @@
     https://html.spec.whatwg.org/multipage/indices.html#elements-3
 -   Polymorphic Components (For Button Components)
     https://www.youtube.com/watch?v=uZ8GZm5KEXY
+-   How to create a ripple effect in react
+    https://reacthustle.com/blog/how-to-create-a-ripple-effect-in-react
