@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import isPropValid from '@emotion/is-prop-valid';
 import styled from '@emotion/styled';
 import { ButtonIconProps, ButtonProps, ButtonRef, StyledButtonProps } from './Button.types';
 import { alpha } from '@utils/styles/colorManipulator';
 import ThemeContextProvider from '@contexts/ThemeContext';
 import * as colors from '@utils/colors';
+import useRipple from '@hooks/useRipple';
+import './Button.style.css';
 
 const ButtonBase = styled('button')({
     display: 'inline-flex',
@@ -146,12 +148,12 @@ const IconBase = styled('svg')({
     height: '1em',
     fill: 'currentcolor',
     userSelect: 'none',
-    '-webkit-user-select': 'none',
-    '-moz-user-select': 'none',
-    '-ms-user-select': 'none',
+    WebkitUserSelect: 'none',
+    MozUserSelect: 'none',
+    msUserSelect: 'none',
     flexShrink: 0,
-    '-webkit-flex-shrink': 0,
-    '-ms-flex-negative': 0,
+    WebkitFlexShrink: 0,
+    msFlexPositive: 1,
 });
 
 const StyledStartIcon = styled(IconBase)<ButtonIconProps>(({ theme, ...props }) => {
@@ -190,15 +192,20 @@ const Button = <E extends React.ElementType = 'button'>(props: ButtonProps<E>) =
     const startIconProps = startIcon?.props;
     const endIconProps = endIcon?.props;
 
+    const ref = useRef<HTMLButtonElement>(null);
+    const ripples = useRipple(ref);
+
     return (
         <ThemeContextProvider>
-            <StyledButton variant={variant} color={color} size={size} as={tag} ref={refElement} {...other}>
+            <StyledButton variant={variant} color={color} size={size} as={tag} ref={ref} {...other}>
                 {/* Start icon */}
                 {startIcon && startIconProps && (
                     <StyledStartIcon size={size} {...startIconProps}>
                         {startIconProps.children}
                     </StyledStartIcon>
                 )}
+                {/* Ripple */}
+                {ripples}
                 {/* Children */}
                 {children}
                 {/* End icon */}
