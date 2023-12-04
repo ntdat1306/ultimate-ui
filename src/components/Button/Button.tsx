@@ -196,8 +196,8 @@ const Button = <E extends React.ElementType = 'button'>(props: ButtonProps<E>) =
     const endIconProps = endIcon?.props;
 
     // Effect
-    const ref = useRef<HTMLButtonElement>(null);
-    const ripples = useRipple(ref);
+    const localRef = useRef<HTMLButtonElement>(null);
+    const ripples = useRipple(localRef);
 
     return (
         <ThemeContextProvider>
@@ -206,7 +206,7 @@ const Button = <E extends React.ElementType = 'button'>(props: ButtonProps<E>) =
                 color={color}
                 size={size}
                 as={tag}
-                ref={mergeRefs([ref, refElement])}
+                ref={mergeRefs([localRef, refElement])}
                 {...other}
             >
                 {/* Start icon */}
