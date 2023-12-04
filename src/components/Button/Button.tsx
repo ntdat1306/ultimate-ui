@@ -186,7 +186,7 @@ const Button = <E extends React.ElementType = 'button'>(props: ButtonProps<E>) =
         variant = 'contained',
         color = 'primary',
         size = 'medium',
-        effect = 'rippleOut',
+        effect,
         refElement,
         startIcon,
         endIcon,
