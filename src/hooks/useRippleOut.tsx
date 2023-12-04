@@ -1,5 +1,3 @@
-//hooks/useRipple.tsx
-
 import React, { useEffect, useState } from 'react';
 import { useDebounce } from './useDebounce';
 import styled from '@emotion/styled';
@@ -11,9 +9,9 @@ interface StyledSpanProps extends React.HTMLProps<HTMLSpanElement> {
     duration: number;
 }
 
-const rippleAnimation = keyframes`
+const rippleOutAnimation = keyframes`
     to {
-        transform: scale(4);
+        outline-width: 8px;
         opacity: 0;
     }
 `;
@@ -23,22 +21,27 @@ const StyledSpan = styled('span', {
 })<StyledSpanProps>(({ theme, ...props }) => {
     return {
         position: 'absolute',
-        backgroundColor: `${props.color}`,
-        opacity: '25%',
-        transform: 'scale(0)',
-        // Add ripple animation
-        animation: `${rippleAnimation} ${props.duration}ms linear`,
-        borderRadius: '50%',
+        zIndex: -1,
+        backgroundColor: 'inherit',
+        animation: `${rippleOutAnimation} ${props.duration}ms linear`,
+        borderRadius: 'inherit',
+        opacity: 0.4,
+        boxSizing: 'border-box',
+        outlineWidth: '0px',
+        outlineStyle: 'solid',
+        outlineColor: 'inherit',
+        pointerEvents: 'none',
+        userSelect: 'none',
     };
 });
 
 /**
  * This hook accepts a ref to any element and adds a click event handler that creates ripples when click
  */
-const useRipple = <T extends HTMLElement>(
+const useRippleOut = <T extends HTMLElement>(
     ref: React.RefObject<T>,
-    color: string = '#ffffff',
-    duration: number = 600
+    color: string = 'red',
+    duration: number = 500
 ) => {
     //rRipples are just styles that we attach to span elements
     const [ripples, setRipples] = useState<React.CSSProperties[]>([]);
@@ -47,24 +50,14 @@ const useRipple = <T extends HTMLElement>(
         // Check if there's a ref
         if (ref.current) {
             const elem = ref.current;
-
-            // Add a click handler for the ripple
             const clickHandler = (e: MouseEvent) => {
-                // Calculate the position and dimensions of the ripple.
-                // Based on click position and button dimensions
-                var rect = elem.getBoundingClientRect();
-                var left = e.clientX - rect.left;
-                var top = e.clientY - rect.top;
-                const height = elem.clientHeight;
-                const width = elem.clientWidth;
-                const diameter = Math.max(width, height);
                 setRipples([
                     ...ripples,
                     {
-                        top: top - diameter / 2,
-                        left: left - diameter / 2,
-                        height: Math.max(width, height),
-                        width: Math.max(width, height),
+                        top: 0,
+                        left: 0,
+                        height: '100%',
+                        width: '100%',
                     },
                 ]);
             };
@@ -80,7 +73,8 @@ const useRipple = <T extends HTMLElement>(
     }, [ref, ripples]);
 
     // Add a debounce so that if the user doesn't click after 1s, we remove the ripples
-    const _debounced = useDebounce(ripples, 1000);
+    const _debounced = useDebounce(ripples, duration);
+
     useEffect(() => {
         if (_debounced.length) {
             setRipples([]);
@@ -94,4 +88,4 @@ const useRipple = <T extends HTMLElement>(
     });
 };
 
-export default useRipple;
+export default useRippleOut;

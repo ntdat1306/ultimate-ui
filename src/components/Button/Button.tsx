@@ -5,8 +5,9 @@ import { ButtonIconProps, ButtonProps, ButtonRef, StyledButtonProps } from './Bu
 import { alpha } from '@utils/styles/colorManipulator';
 import ThemeContextProvider from '@contexts/ThemeContext';
 import * as colors from '@utils/colors';
-import useRipple from '@hooks/useRipple';
 import mergeRefs from '@utils/system/mergeRefs';
+import useRippleIn from '@hooks/useRippleIn';
+import useRippleOut from '@hooks/useRippleOut';
 
 const ButtonBase = styled('button')({
     display: 'inline-flex',
@@ -15,7 +16,6 @@ const ButtonBase = styled('button')({
     position: 'relative',
     boxSizing: 'border-box',
     WebkitTapHighlightColor: 'transparent',
-    overflow: 'hidden', // Set ripple don't overflow button
     backgroundColor: 'transparent', // Reset default value
     // We disable the focus ring for mouse, touch and keyboard users.
     outline: 0,
@@ -47,6 +47,8 @@ const StyledButton = styled(ButtonBase, {
         minWidth: '4rem',
         borderRadius: theme.shape.borderRadius,
         textDecoration: 'none',
+        ...(props.effect === 'rippleIn' && { overflow: 'hidden' }), // For rippleIn effect
+        ...(props.color !== 'inherit' && { outlineColor: theme.palette[props.color].main }), // For rippleOut effect
         // Size
         ...(props.size === 'small'
             ? { padding: '0.25rem 0.5rem' }
@@ -197,7 +199,8 @@ const Button = <E extends React.ElementType = 'button'>(props: ButtonProps<E>) =
 
     // Ref
     const localRef = useRef<HTMLButtonElement>(null);
-    const ripples = useRipple(localRef);
+    const ripplesIn = useRippleIn(localRef);
+    const ripplesOut = useRippleOut(localRef);
 
     // Component
     const startIconComponent = startIcon && startIconProps && (
@@ -212,7 +215,7 @@ const Button = <E extends React.ElementType = 'button'>(props: ButtonProps<E>) =
         </StyledEndIcon>
     );
 
-    const effectAnimation = effect === 'ripple' && ripples;
+    const effectAnimation = effect === 'rippleIn' ? ripplesIn : effect === 'rippleOut' ? ripplesOut : null;
 
     return (
         <ThemeContextProvider>
@@ -220,6 +223,7 @@ const Button = <E extends React.ElementType = 'button'>(props: ButtonProps<E>) =
                 variant={variant}
                 color={color}
                 size={size}
+                effect={effect}
                 as={tag}
                 ref={mergeRefs([localRef, refElement])}
                 {...other}

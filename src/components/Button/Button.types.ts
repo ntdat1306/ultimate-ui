@@ -1,7 +1,7 @@
 type Variant = 'contained' | 'outlined' | 'text';
 type Color = 'inherit' | 'primary' | 'secondary' | 'success' | 'error' | 'info' | 'warning';
 type Size = 'small' | 'medium' | 'large';
-type Effect = 'ripple';
+type Effect = 'rippleIn' | 'rippleOut';
 type Icon = JSX.Element;
 
 export type ButtonOwnProps<E extends React.ElementType> = {
