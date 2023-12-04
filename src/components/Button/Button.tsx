@@ -186,7 +186,7 @@ const Button = <E extends React.ElementType = 'button'>(props: ButtonProps<E>) =
         variant = 'contained',
         color = 'primary',
         size = 'medium',
-        effect,
+        effect = 'rippleOut',
         refElement,
         startIcon,
         endIcon,
@@ -200,7 +200,7 @@ const Button = <E extends React.ElementType = 'button'>(props: ButtonProps<E>) =
     // Ref
     const localRef = useRef<HTMLButtonElement>(null);
     const ripplesIn = useRippleIn(localRef);
-    const ripplesOut = useRippleOut(localRef);
+    const ripplesOut = useRippleOut(localRef, color);
 
     // Component
     const startIconComponent = startIcon && startIconProps && (

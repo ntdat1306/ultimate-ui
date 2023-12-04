@@ -7,11 +7,22 @@ import { duration } from '../utils/styles/createTransitions';
 
 interface StyledSpanProps extends React.HTMLProps<HTMLSpanElement> {
     duration: number;
+    color: string;
 }
 
-const rippleOutAnimation = keyframes`
-    to {
-        outline-width: 8px;
+const fade = keyframes`
+    0% {
+        box-shadow: 0 0 0 0 currentcolor;
+        opacity: 0;
+    }
+
+    25% {
+        box-shadow: 0 0 0 8px currentcolor;
+        opacity: 0.2;
+    }
+
+    100% {
+        box-shadow: 0 0 0 8px currentcolor;
         opacity: 0;
     }
 `;
@@ -20,29 +31,26 @@ const StyledSpan = styled('span', {
     shouldForwardProp: (prop) => isPropValid(prop),
 })<StyledSpanProps>(({ theme, ...props }) => {
     return {
+        ...(props.color !== 'inherit'
+            ? {
+                  color: theme.palette[props.color].main,
+              }
+            : { color: 'inherit' }),
+
         position: 'absolute',
         zIndex: -1,
-        backgroundColor: 'inherit',
-        animation: `${rippleOutAnimation} ${props.duration}ms linear`,
+        animation: `${fade} ${props.duration}ms linear`,
+        backgroundColor: 'transparent',
         borderRadius: 'inherit',
-        opacity: 0.4,
         boxSizing: 'border-box',
-        outlineWidth: '0px',
-        outlineStyle: 'solid',
-        outlineColor: 'inherit',
         pointerEvents: 'none',
-        userSelect: 'none',
     };
 });
 
 /**
  * This hook accepts a ref to any element and adds a click event handler that creates ripples when click
  */
-const useRippleOut = <T extends HTMLElement>(
-    ref: React.RefObject<T>,
-    color: string = 'red',
-    duration: number = 500
-) => {
+const useRippleOut = <T extends HTMLElement>(ref: React.RefObject<T>, color: string, duration: number = 500) => {
     //rRipples are just styles that we attach to span elements
     const [ripples, setRipples] = useState<React.CSSProperties[]>([]);
 
