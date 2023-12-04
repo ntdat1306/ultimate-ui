@@ -6,6 +6,7 @@ import { alpha } from '@utils/styles/colorManipulator';
 import ThemeContextProvider from '@contexts/ThemeContext';
 import * as colors from '@utils/colors';
 import useRipple from '@hooks/useRipple';
+import mergeRefs from '@utils/system/mergeRefs';
 
 const ButtonBase = styled('button')({
     display: 'inline-flex',
@@ -183,29 +184,37 @@ const Button = <E extends React.ElementType = 'button'>(props: ButtonProps<E>) =
         variant = 'contained',
         color = 'primary',
         size = 'medium',
+        effect,
         refElement,
         startIcon,
         endIcon,
         ...other
     } = props;
+
     const tag = as || 'button';
     const startIconProps = startIcon?.props;
     const endIconProps = endIcon?.props;
 
+    // Effect
     const ref = useRef<HTMLButtonElement>(null);
     const ripples = useRipple(ref);
 
     return (
         <ThemeContextProvider>
-            <StyledButton variant={variant} color={color} size={size} as={tag} ref={ref} {...other}>
+            <StyledButton
+                variant={variant}
+                color={color}
+                size={size}
+                as={tag}
+                ref={mergeRefs([ref, refElement])}
+                {...other}
+            >
                 {/* Start icon */}
                 {startIcon && startIconProps && (
                     <StyledStartIcon size={size} {...startIconProps}>
                         {startIconProps.children}
                     </StyledStartIcon>
                 )}
-                {/* Ripple */}
-                {ripples}
                 {/* Children */}
                 {children}
                 {/* End icon */}
@@ -214,6 +223,8 @@ const Button = <E extends React.ElementType = 'button'>(props: ButtonProps<E>) =
                         {endIconProps.children}
                     </StyledEndIcon>
                 )}
+                {/* Effect */}
+                {effect === 'ripple' && ripples}
             </StyledButton>
         </ThemeContextProvider>
     );

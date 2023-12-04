@@ -5,8 +5,13 @@ import { useDebounce } from './useDebounce';
 import styled from '@emotion/styled';
 import isPropValid from '@emotion/is-prop-valid';
 import { keyframes } from '@emotion/react';
+import { duration } from '../utils/styles/createTransitions';
 
-const ripple = keyframes`
+interface StyledSpanProps extends React.HTMLProps<HTMLSpanElement> {
+    duration: number;
+}
+
+const rippleAnimation = keyframes`
     to {
         transform: scale(4);
         opacity: 0;
@@ -15,14 +20,14 @@ const ripple = keyframes`
 
 const StyledSpan = styled('span', {
     shouldForwardProp: (prop) => isPropValid(prop),
-})(({ theme, ...props }) => {
+})<StyledSpanProps>(({ theme, ...props }) => {
     return {
         position: 'absolute',
-        backgroundColor: '#FFFFFF',
+        backgroundColor: `${props.color}`,
         opacity: '25%',
         transform: 'scale(0)',
-        // add ripple animation from styles.css
-        animation: `${ripple} 600ms linear`,
+        // Add ripple animation
+        animation: `${rippleAnimation} ${props.duration}ms linear`,
         borderRadius: '50%',
     };
 });
@@ -30,19 +35,23 @@ const StyledSpan = styled('span', {
 /**
  * This hook accepts a ref to any element and adds a click event handler that creates ripples when click
  */
-const useRipple = <T extends HTMLElement>(ref: React.RefObject<T>) => {
-    //ripples are just styles that we attach to span elements
+const useRipple = <T extends HTMLElement>(
+    ref: React.RefObject<T>,
+    color: string = '#ffffff',
+    duration: number = 600
+) => {
+    //rRipples are just styles that we attach to span elements
     const [ripples, setRipples] = useState<React.CSSProperties[]>([]);
 
     useEffect(() => {
-        //check if there's a ref
+        // Check if there's a ref
         if (ref.current) {
             const elem = ref.current;
 
-            //add a click handler for the ripple
+            // Add a click handler for the ripple
             const clickHandler = (e: MouseEvent) => {
-                //calculate the position and dimensions of the ripple.
-                //based on click position and button dimensions
+                // Calculate the position and dimensions of the ripple.
+                // Based on click position and button dimensions
                 var rect = elem.getBoundingClientRect();
                 var left = e.clientX - rect.left;
                 var top = e.clientY - rect.top;
@@ -60,17 +69,17 @@ const useRipple = <T extends HTMLElement>(ref: React.RefObject<T>) => {
                 ]);
             };
 
-            //add an event listener to the button
+            // Add an event listener to the button
             elem.addEventListener('click', clickHandler);
 
-            //clean up when the component is unmounted
+            // Clean up when the component is unmounted
             return () => {
                 elem.removeEventListener('click', clickHandler);
             };
         }
     }, [ref, ripples]);
 
-    //add a debounce so that if the user doesn't click after 1s, we remove the ripples
+    // Add a debounce so that if the user doesn't click after 1s, we remove the ripples
     const _debounced = useDebounce(ripples, 1000);
     useEffect(() => {
         if (_debounced.length) {
@@ -78,10 +87,10 @@ const useRipple = <T extends HTMLElement>(ref: React.RefObject<T>) => {
         }
     }, [_debounced.length]);
 
-    //map through the ripples and return span elements.
-    //this will be added to the button component later
+    // Map through the ripples and return span elements.
+    // This will be added to the button component later
     return ripples?.map((style, i) => {
-        return <StyledSpan key={i} style={{ ...style }} />;
+        return <StyledSpan key={i} color={color} duration={duration} style={{ ...style }} />;
     });
 };
 

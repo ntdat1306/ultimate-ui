@@ -1,6 +1,7 @@
 type Variant = 'contained' | 'outlined' | 'text';
 type Color = 'inherit' | 'primary' | 'secondary' | 'success' | 'error' | 'info' | 'warning';
 type Size = 'small' | 'medium' | 'large';
+type Effect = 'ripple';
 type Icon = JSX.Element;
 
 export type ButtonOwnProps<E extends React.ElementType> = {
@@ -8,6 +9,7 @@ export type ButtonOwnProps<E extends React.ElementType> = {
     variant?: Variant;
     color?: Color;
     size?: Size;
+    effect?: Effect;
     startIcon?: Icon;
     endIcon?: Icon;
     as?: E;
