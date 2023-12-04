@@ -17,12 +17,12 @@ const fade = keyframes`
     }
 
     25% {
-        box-shadow: 0 0 0 8px currentcolor;
+        box-shadow: 0 0 0 6px currentcolor;
         opacity: 0.2;
     }
 
     100% {
-        box-shadow: 0 0 0 8px currentcolor;
+        box-shadow: 0 0 0 6px currentcolor;
         opacity: 0;
     }
 `;
