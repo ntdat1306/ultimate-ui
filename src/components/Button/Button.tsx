@@ -159,23 +159,27 @@ const IconBase = styled('svg')({
     msFlexPositive: 1,
 });
 
-const StyledStartIcon = styled(IconBase)<ButtonIconProps>(({ theme, ...props }) => {
+const StyledStartIcon = styled(IconBase, {
+    shouldForwardProp: (prop) => isPropValid(prop),
+})<ButtonIconProps>(({ theme, ...props }) => {
     return {
         ...(props.size === 'small'
-            ? { fontSize: '1.125rem', marginRight: '0.125rem' }
+            ? { fontSize: props.fontSize || '1.125rem', marginRight: '0.25rem' }
             : props.size === 'large'
-            ? { fontSize: '1.5rem', marginRight: '0.375rem' }
-            : { fontSize: '1.25rem', marginRight: '0.25rem' }),
+            ? { fontSize: props.fontSize || '1.5rem', marginRight: '0.5rem' }
+            : { fontSize: props.fontSize || '1.25rem', marginRight: '0.5rem' }),
     };
 });
 
-const StyledEndIcon = styled(IconBase)<ButtonIconProps>(({ theme, ...props }) => {
+const StyledEndIcon = styled(IconBase, {
+    shouldForwardProp: (prop) => isPropValid(prop),
+})<ButtonIconProps>(({ theme, ...props }) => {
     return {
         ...(props.size === 'small'
-            ? { fontSize: '1.125rem', marginLeft: '0.125rem' }
+            ? { fontSize: props.fontSize || '1.125rem', marginLeft: '0.25rem' }
             : props.size === 'large'
-            ? { fontSize: '1.5rem', marginLeft: '0.375rem' }
-            : { fontSize: '1.25rem', marginLeft: '0.25rem' }),
+            ? { fontSize: props.fontSize || '1.5rem', marginLeft: '0.5rem' }
+            : { fontSize: props.fontSize || '1.25rem', marginLeft: '0.5rem' }),
     };
 });
 
