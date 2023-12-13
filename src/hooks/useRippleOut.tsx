@@ -3,7 +3,6 @@ import { useDebounce } from './useDebounce';
 import styled from '@emotion/styled';
 import isPropValid from '@emotion/is-prop-valid';
 import { keyframes } from '@emotion/react';
-import { duration } from '../utils/styles/createTransitions';
 
 interface StyledSpanProps extends React.HTMLProps<HTMLSpanElement> {
     duration: number;

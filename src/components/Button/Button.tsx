@@ -201,10 +201,10 @@ const Button = <E extends React.ElementType = 'button'>(props: ButtonProps<E>) =
     const startIconProps = startIcon?.props;
     const endIconProps = endIcon?.props;
 
-    // Ref
-    const localRef = useRef<HTMLButtonElement>(null);
-    const ripplesIn = useRippleIn(localRef);
-    const ripplesOut = useRippleOut(localRef, color);
+    // Ripple
+    const rippleRef = useRef<HTMLButtonElement>(null);
+    const rippleIn = useRippleIn(rippleRef);
+    const rippleOut = useRippleOut(rippleRef, color);
 
     // Component
     const startIconComponent = startIcon && startIconProps && (
@@ -219,7 +219,7 @@ const Button = <E extends React.ElementType = 'button'>(props: ButtonProps<E>) =
         </StyledEndIcon>
     );
 
-    const effectAnimation = effect === 'rippleIn' ? ripplesIn : effect === 'rippleOut' ? ripplesOut : null;
+    const effectAnimation = effect === 'rippleIn' ? rippleIn : effect === 'rippleOut' ? rippleOut : null;
 
     return (
         <ThemeContextProvider>
@@ -229,7 +229,7 @@ const Button = <E extends React.ElementType = 'button'>(props: ButtonProps<E>) =
                 size={size}
                 effect={effect}
                 as={tag}
-                ref={mergeRefs([localRef, refElement])}
+                ref={mergeRefs([rippleRef, refElement])}
                 {...other}
             >
                 {startIconComponent}
