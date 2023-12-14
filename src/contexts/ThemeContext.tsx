@@ -1,21 +1,23 @@
 import React from 'react';
-import { ThemeProvider } from '@emotion/react';
+import { Theme, ThemeProvider } from '@emotion/react';
 import { createTheme } from '@utils/styles';
+import deepMerge from '@utils/system/deepMerge';
 
-const theme = createTheme({
+export const defaultTheme = createTheme({
     palette: {
         mode: 'light',
     },
 });
 
-console.log(theme);
-
 interface ThemeContextProviderProps {
     children?: React.ReactNode;
+    customTheme?: Theme;
 }
 
-const ThemeContextProvider: React.FC<ThemeContextProviderProps> = ({ children }) => {
-    return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
+const ThemeContextProvider: React.FC<ThemeContextProviderProps> = ({ children, customTheme }) => {
+    console.log(deepMerge(defaultTheme, customTheme));
+    
+    return <ThemeProvider theme={deepMerge(defaultTheme, customTheme)}>{children}</ThemeProvider>;
 };
 
 export default ThemeContextProvider;

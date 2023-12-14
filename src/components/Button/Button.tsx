@@ -1,13 +1,14 @@
 import React, { useRef } from 'react';
 import isPropValid from '@emotion/is-prop-valid';
 import styled from '@emotion/styled';
-import { ButtonIconProps, ButtonProps, ButtonRef, StyledButtonProps } from './Button.types';
+import { ButtonIconProps, ButtonProps, StyledButtonProps } from './Button.types';
 import { alpha } from '@utils/styles/colorManipulator';
 import ThemeContextProvider from '@contexts/ThemeContext';
 import * as colors from '@utils/colors';
 import mergeRefs from '@utils/system/mergeRefs';
 import useRippleIn from '@hooks/useRippleIn';
 import useRippleOut from '@hooks/useRippleOut';
+import useCustomTheme from '@hooks/useCustomTheme';
 
 const ButtonBase = styled('button')({
     display: 'inline-flex',
@@ -201,6 +202,9 @@ const Button = <E extends React.ElementType = 'button'>(props: ButtonProps<E>) =
     const startIconProps = startIcon?.props;
     const endIconProps = endIcon?.props;
 
+    // Custom theme
+    const customTheme = useCustomTheme();
+
     // Ripple
     const rippleRef = useRef<HTMLButtonElement>(null);
     const rippleIn = useRippleIn(rippleRef);
@@ -222,7 +226,7 @@ const Button = <E extends React.ElementType = 'button'>(props: ButtonProps<E>) =
     const effectAnimation = effect === 'rippleIn' ? rippleIn : effect === 'rippleOut' ? rippleOut : null;
 
     return (
-        <ThemeContextProvider>
+        <ThemeContextProvider customTheme={customTheme}>
             <StyledButton
                 variant={variant}
                 color={color}

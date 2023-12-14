@@ -1,10 +1,8 @@
-import { Theme as SystemTheme, SxProps, CSSObject, SxConfig } from '@mui/system';
-
 import { Palette, PaletteOptions } from './createPalette';
 import { Typography, TypographyOptions } from './createTypography';
 
 export interface Theme {
-    palette: Record<string, any> & { mode: 'light' | 'dark' };
+    palette?: Record<string, any> & { mode: 'light' | 'dark' };
     typography?: unknown;
 }
 

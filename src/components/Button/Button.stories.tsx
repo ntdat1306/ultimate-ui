@@ -3,6 +3,7 @@ import { Meta, StoryObj } from '@storybook/react';
 import Button from './Button';
 import { ButtonProps } from './Button.types';
 import styled from '@emotion/styled';
+import CustomThemeProvider from '../../contexts/CustomTheme';
 
 const meta: Meta<typeof Button> = {
     component: Button,
@@ -24,6 +25,18 @@ const VisuallyHiddenInput = styled('input')({
     whiteSpace: 'nowrap',
     width: 1,
 });
+
+export const CustomTheme: Story = (args: ButtonProps<any>) => (
+    <CustomThemeProvider customTheme={{ x: 'red' }}>
+        <Button {...args}>Button</Button>
+        <CustomThemeProvider customTheme={{ palette: { main: 'red' } }}>
+            <Button {...args}>Button 2</Button>
+        </CustomThemeProvider>
+    </CustomThemeProvider>
+);
+CustomTheme.args = {
+    variant: 'contained',
+};
 
 export const Contained: Story = (args: ButtonProps<any>) => <Button {...args}>Button</Button>;
 Contained.args = {
