@@ -1,8 +1,8 @@
-import { CustomThemeContext } from '@contexts/CustomTheme';
+import { ThemeContext } from '@contexts/CustomTheme';
 import React, { useContext } from 'react';
 
 const useCustomTheme = () => {
-    const context = useContext(CustomThemeContext);
+    const context = useContext(ThemeContext);
     return context;
 };
 

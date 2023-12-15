@@ -3,12 +3,12 @@ import isPropValid from '@emotion/is-prop-valid';
 import styled from '@emotion/styled';
 import { ButtonIconProps, ButtonProps, StyledButtonProps } from './Button.types';
 import { alpha } from '@utils/styles/colorManipulator';
-import ThemeContextProvider from '@contexts/ThemeContext';
 import * as colors from '@utils/colors';
 import mergeRefs from '@utils/system/mergeRefs';
 import useRippleIn from '@hooks/useRippleIn';
 import useRippleOut from '@hooks/useRippleOut';
 import useCustomTheme from '@hooks/useCustomTheme';
+import { createTheme } from '../..';
 
 const ButtonBase = styled('button')({
     display: 'inline-flex',
@@ -226,22 +226,21 @@ const Button = <E extends React.ElementType = 'button'>(props: ButtonProps<E>) =
     const effectAnimation = effect === 'rippleIn' ? rippleIn : effect === 'rippleOut' ? rippleOut : null;
 
     return (
-        <ThemeContextProvider customTheme={customTheme}>
-            <StyledButton
-                variant={variant}
-                color={color}
-                size={size}
-                effect={effect}
-                as={tag}
-                ref={mergeRefs([rippleRef, refElement])}
-                {...other}
-            >
-                {startIconComponent}
-                {children}
-                {endIconComponent}
-                {effectAnimation}
-            </StyledButton>
-        </ThemeContextProvider>
+        <StyledButton
+            variant={variant}
+            color={color}
+            size={size}
+            effect={effect}
+            as={tag}
+            ref={mergeRefs([rippleRef, refElement])}
+            theme={customTheme}
+            {...other}
+        >
+            {startIconComponent}
+            {children}
+            {endIconComponent}
+            {effectAnimation}
+        </StyledButton>
     );
 };
 
