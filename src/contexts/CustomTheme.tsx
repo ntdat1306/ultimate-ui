@@ -6,11 +6,11 @@ export const ThemeContext = createContext(defaultTheme);
 
 interface ThemeProviderProps {
     children?: React.ReactNode;
-    customTheme?: Theme;
+    theme?: Theme;
 }
 
-const ThemeProvider: React.FC<ThemeProviderProps> = ({ children, customTheme = defaultTheme }) => {
-    return <ThemeContext.Provider value={customTheme}>{children}</ThemeContext.Provider>;
+const ThemeProvider: React.FC<ThemeProviderProps> = ({ children, theme = defaultTheme }) => {
+    return <ThemeContext.Provider value={theme}>{children}</ThemeContext.Provider>;
 };
 
 export default ThemeProvider;

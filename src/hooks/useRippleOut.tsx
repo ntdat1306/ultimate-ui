@@ -3,6 +3,7 @@ import { useDebounce } from './useDebounce';
 import styled from '@emotion/styled';
 import isPropValid from '@emotion/is-prop-valid';
 import { keyframes } from '@emotion/react';
+import useCustomTheme from './useCustomTheme';
 
 interface StyledSpanProps extends React.HTMLProps<HTMLSpanElement> {
     duration: number;
@@ -52,6 +53,7 @@ const StyledSpan = styled('span', {
 const useRippleOut = <T extends HTMLElement>(ref: React.RefObject<T>, color: string, duration: number = 500) => {
     //rRipples are just styles that we attach to span elements
     const [ripples, setRipples] = useState<React.CSSProperties[]>([]);
+    const customTheme = useCustomTheme();
 
     useEffect(() => {
         // Check if there's a ref
@@ -91,7 +93,7 @@ const useRippleOut = <T extends HTMLElement>(ref: React.RefObject<T>, color: str
     // Map through the ripples and return span elements.
     // This will be added to the button component later
     return ripples?.map((style, i) => {
-        return <StyledSpan key={i} color={color} duration={duration} style={{ ...style }} />;
+        return <StyledSpan key={i} color={color} duration={duration} theme={customTheme} style={{ ...style }} />;
     });
 };
 

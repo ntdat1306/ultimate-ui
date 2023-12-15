@@ -4,6 +4,7 @@ import Button from './Button';
 import { ButtonProps } from './Button.types';
 import styled from '@emotion/styled';
 import ThemeProvider from '../../contexts/CustomTheme';
+import { createTheme } from '../../utils';
 
 const meta: Meta<typeof Button> = {
     component: Button,
@@ -26,14 +27,15 @@ const VisuallyHiddenInput = styled('input')({
     width: 1,
 });
 
+// Theme
+const theme = createTheme({ palette: { primary: { main: '#f5584d' } } });
 export const CustomTheme: Story = (args: ButtonProps<any>) => (
-    <ThemeProvider customTheme={{ palette: { primary: { main: '#f5584d' } } }}>
+    <ThemeProvider theme={theme}>
         <Button {...args}>Button</Button>
     </ThemeProvider>
 );
 CustomTheme.args = {
     variant: 'contained',
-    effect: "rippleOut"
 };
 
 export const Contained: Story = (args: ButtonProps<any>) => <Button {...args}>Button</Button>;
