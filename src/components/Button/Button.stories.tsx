@@ -29,7 +29,7 @@ const VisuallyHiddenInput = styled('input')({
 export const CustomTheme: Story = (args: ButtonProps<any>) => (
     <CustomThemeProvider customTheme={{ x: 'red' }}>
         <Button {...args}>Button</Button>
-        <CustomThemeProvider customTheme={{ palette: { main: 'red' } }}>
+        <CustomThemeProvider customTheme={{ palette: { primary: { main: '#f5584d', contrastText: '#ff5e00' } } }}>
             <Button {...args}>Button 2</Button>
         </CustomThemeProvider>
     </CustomThemeProvider>

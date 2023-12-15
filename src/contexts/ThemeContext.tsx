@@ -1,6 +1,6 @@
 import React from 'react';
 import { Theme, ThemeProvider } from '@emotion/react';
-import { createTheme } from '@utils/styles';
+import createTheme from '@utils/styles/createTheme';
 import deepMerge from '@utils/system/deepMerge';
 
 export const defaultTheme = createTheme({
@@ -16,7 +16,7 @@ interface ThemeContextProviderProps {
 
 const ThemeContextProvider: React.FC<ThemeContextProviderProps> = ({ children, customTheme }) => {
     console.log(deepMerge(defaultTheme, customTheme));
-    
+
     return <ThemeProvider theme={deepMerge(defaultTheme, customTheme)}>{children}</ThemeProvider>;
 };
 
