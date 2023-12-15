@@ -21,8 +21,8 @@ const StyledSpan = styled('span', {
 })<StyledSpanProps>(({ theme, ...props }) => {
     return {
         position: 'absolute',
-        backgroundColor: `${props.color}`,
-        opacity: '25%',
+        backgroundColor: 'currentColor',
+        opacity: '0.25',
         transform: 'scale(0)',
         // Add ripple animation
         animation: `${rippleAnimation} ${props.duration}ms linear`,
@@ -33,11 +33,7 @@ const StyledSpan = styled('span', {
 /**
  * This hook accepts a ref to any element and adds a click event handler that creates ripples when click
  */
-const useRippleIn = <T extends HTMLElement>(
-    ref: React.RefObject<T>,
-    color: string = '#ffffff',
-    duration: number = 600
-) => {
+const useRippleIn = <T extends HTMLElement>(ref: React.RefObject<T>, duration: number = 600) => {
     //rRipples are just styles that we attach to span elements
     const [ripples, setRipples] = useState<React.CSSProperties[]>([]);
 
@@ -88,7 +84,7 @@ const useRippleIn = <T extends HTMLElement>(
     // Map through the ripples and return span elements.
     // This will be added to the button component later
     return ripples?.map((style, i) => {
-        return <StyledSpan key={i} color={color} duration={duration} style={{ ...style }} />;
+        return <StyledSpan key={i} duration={duration} style={{ ...style }} />;
     });
 };
 

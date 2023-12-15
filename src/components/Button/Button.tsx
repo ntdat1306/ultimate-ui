@@ -64,6 +64,7 @@ const StyledButton = styled(ButtonBase, {
                   border: `1px solid ${theme.palette[props.color].main}`,
                   '&:hover': {
                       backgroundColor: theme.palette[props.color].dark,
+                      border: `1px solid ${theme.palette[props.color].dark}`,
                   },
                   '&:disabled': {
                       color: theme.palette.action.disabled,
