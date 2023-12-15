@@ -2,12 +2,7 @@ import React from 'react';
 import { Theme, ThemeProvider } from '@emotion/react';
 import createTheme from '@utils/styles/createTheme';
 import deepMerge from '@utils/system/deepMerge';
-
-export const defaultTheme = createTheme({
-    palette: {
-        mode: 'light',
-    },
-});
+import defaultTheme from '@utils/styles/defaultTheme';
 
 interface ThemeContextProviderProps {
     children?: React.ReactNode;

@@ -1,6 +1,6 @@
 import { Theme } from '@emotion/react';
+import defaultTheme from '@utils/styles/defaultTheme';
 import React, { createContext } from 'react';
-import { defaultTheme } from './ThemeContext';
 
 export const CustomThemeContext = createContext(defaultTheme);
 
