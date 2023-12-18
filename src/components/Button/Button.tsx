@@ -2,43 +2,13 @@ import React, { useRef } from 'react';
 import isPropValid from '@emotion/is-prop-valid';
 import styled from '@emotion/styled';
 import { ButtonIconProps, ButtonProps, StyledButtonProps } from './Button.types';
+import ButtonBase from '@components/ButtonBase';
 import { alpha } from '@utils/styles/colorManipulator';
 import * as colors from '@utils/colors';
 import mergeRefs from '@utils/system/mergeRefs';
 import useRippleIn from '@hooks/useRippleIn';
 import useRippleOut from '@hooks/useRippleOut';
 import useCustomTheme from '@hooks/useCustomTheme';
-import { createTheme } from '../..';
-
-const ButtonBase = styled('button')({
-    display: 'inline-flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    position: 'relative',
-    boxSizing: 'border-box',
-    WebkitTapHighlightColor: 'transparent',
-    backgroundColor: 'transparent', // Reset default value
-    // We disable the focus ring for mouse, touch and keyboard users.
-    outline: 0,
-    border: 0,
-    margin: 0, // Remove the margin in Safari
-    borderRadius: 0,
-    padding: 0, // Remove the padding in Firefox
-    cursor: 'pointer',
-    userSelect: 'none',
-    verticalAlign: 'middle',
-    MozAppearance: 'none', // Reset
-    WebkitAppearance: 'none', // Reset
-    textDecoration: 'none',
-    // So we take precedent over the style of a native <a /> element.
-    color: 'inherit',
-    '&::-moz-focus-inner': {
-        borderStyle: 'none', // Remove Firefox dotted outline.
-    },
-    '@media print': {
-        colorAdjust: 'exact',
-    },
-});
 
 const StyledButton = styled(ButtonBase, {
     shouldForwardProp: (prop) => isPropValid(prop),
