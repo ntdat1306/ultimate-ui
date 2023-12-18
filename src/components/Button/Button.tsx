@@ -9,9 +9,22 @@ import mergeRefs from '@utils/system/mergeRefs';
 import useRippleIn from '@hooks/useRippleIn';
 import useRippleOut from '@hooks/useRippleOut';
 import useCustomTheme from '@hooks/useCustomTheme';
+import { UuiLoading } from '@components/Icon/Icon';
+import { keyframes } from '@emotion/react';
+
+// Loading animation
+const spinner = keyframes`
+0% {
+    transform: rotate(0);
+}
+
+100% {
+    transform: rotate(360deg);
+}
+`;
 
 const StyledButton = styled(ButtonBase, {
-    shouldForwardProp: (prop) => isPropValid(prop),
+    shouldForwardProp: (prop) => isPropValid(prop) && prop !== 'loading',
 })<StyledButtonProps>(({ theme, ...props }) => {
     return {
         ...theme.typography.button,
@@ -114,6 +127,11 @@ const StyledButton = styled(ButtonBase, {
                 },
             }),
         }),
+        // Loading
+        ...(props.loading && {
+            opacity: 0.5,
+            pointerEvents: 'none',
+        }),
     };
 });
 
@@ -155,6 +173,28 @@ const StyledEndIcon = styled(IconBase, {
     };
 });
 
+const StyledLoadingIcon = styled(IconBase, {
+    shouldForwardProp: (prop) => isPropValid(prop),
+})<ButtonIconProps>(({ theme, ...props }) => {
+    return {
+        animation: `${spinner} ${props.loadingSpeed}ms infinite ease-in-out`,
+        ...(props.size === 'small'
+            ? {
+                  fontSize: props.fontSize || '1.125rem',
+                  ...(props.loadingPosition === 'start' ? { marginRight: '0.25rem' } : { marginLeft: '0.25rem' }),
+              }
+            : props.size === 'large'
+            ? {
+                  fontSize: props.fontSize || '1.5rem',
+                  ...(props.loadingPosition === 'start' ? { marginRight: '0.5rem' } : { marginLeft: '0.5rem' }),
+              }
+            : {
+                  fontSize: props.fontSize || '1.25rem',
+                  ...(props.loadingPosition === 'start' ? { marginRight: '0.5rem' } : { marginLeft: '0.5rem' }),
+              }),
+    };
+});
+
 const Button = <E extends React.ElementType = 'button'>(props: ButtonProps<E>) => {
     const {
         children,
@@ -166,12 +206,17 @@ const Button = <E extends React.ElementType = 'button'>(props: ButtonProps<E>) =
         refElement,
         startIcon,
         endIcon,
+        loading,
+        loadingPosition = 'end',
+        loadingIcon = UuiLoading(),
+        loadingSpeed = 1000,
         ...other
     } = props;
 
     const tag = as || 'button';
     const startIconProps = startIcon?.props;
     const endIconProps = endIcon?.props;
+    const loadingIconProps = loadingIcon?.props;
 
     // Custom theme
     const customTheme = useCustomTheme();
@@ -182,17 +227,48 @@ const Button = <E extends React.ElementType = 'button'>(props: ButtonProps<E>) =
     const rippleOut = useRippleOut(rippleRef, color);
 
     // Component
-    const startIconComponent = startIcon && startIconProps && (
+    const startIconComponent = !loading && startIcon && startIconProps && (
         <StyledStartIcon size={size} {...startIconProps}>
             {startIconProps.children}
         </StyledStartIcon>
     );
 
-    const endIconComponent = endIcon && endIconProps && (
+    const endIconComponent = !loading && endIcon && endIconProps && (
         <StyledEndIcon size={size} {...endIconProps}>
             {endIconProps.children}
         </StyledEndIcon>
     );
+
+    const loadingIconComponent = loading && loadingIcon && loadingIconProps && (
+        <StyledLoadingIcon
+            size={size}
+            loadingPosition={loadingPosition}
+            loadingSpeed={loadingSpeed}
+            {...loadingIconProps}
+        >
+            {loadingIconProps.children}
+        </StyledLoadingIcon>
+    );
+
+    const getChildrenComponent = () => {
+        // There is a known issue with translating a page using Chrome tools when a Loading Button is present. After the page is translated, the application crashes when the loading state of a Button changes. To prevent this, ensure that the contents of the Loading Button are nested inside any HTML element, such as a <span>
+        if (loading) {
+            if (loadingPosition === 'start')
+                return (
+                    <>
+                        {loadingIconComponent}
+                        <span>{children}</span>
+                    </>
+                );
+            else
+                return (
+                    <>
+                        <span>{children}</span>
+                        {loadingIconComponent}
+                    </>
+                );
+        } else return children;
+    };
 
     const effectAnimation = effect === 'rippleIn' ? rippleIn : effect === 'rippleOut' ? rippleOut : null;
 
@@ -203,12 +279,13 @@ const Button = <E extends React.ElementType = 'button'>(props: ButtonProps<E>) =
             size={size}
             effect={effect}
             as={tag}
+            loading={loading}
             ref={mergeRefs([rippleRef, refElement])}
             theme={customTheme}
             {...other}
         >
             {startIconComponent}
-            {children}
+            {getChildrenComponent()}
             {endIconComponent}
             {effectAnimation}
         </StyledButton>

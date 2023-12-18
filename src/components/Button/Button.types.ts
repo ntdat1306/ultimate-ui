@@ -2,7 +2,11 @@ type Variant = 'contained' | 'outlined' | 'text';
 type Color = 'inherit' | 'primary' | 'secondary' | 'success' | 'error' | 'info' | 'warning';
 type Size = 'small' | 'medium' | 'large';
 type Effect = 'rippleIn' | 'rippleOut';
+type Disabled = boolean;
 type Icon = JSX.Element;
+type Loading = boolean;
+type LoadingPosition = 'start' | 'end';
+type LoadingSpeed = number;
 
 export type ButtonOwnProps<E extends React.ElementType> = {
     children?: React.ReactNode;
@@ -12,12 +16,19 @@ export type ButtonOwnProps<E extends React.ElementType> = {
     effect?: Effect;
     startIcon?: Icon;
     endIcon?: Icon;
+    disabled?: Disabled,
+    loading?: Loading | 'true' | 'false';
+    loadingPosition?: LoadingPosition;
+    loadingIcon?: Icon;
+    loadingSpeed?: LoadingSpeed;
     as?: E;
     refElement?: ButtonRef<E>;
 };
 
 export interface ButtonIconProps {
     size?: Size;
+    loadingSpeed?: LoadingSpeed;
+    loadingPosition?: LoadingPosition;
 }
 
 export type ButtonRef<E extends React.ElementType> = React.ComponentPropsWithRef<E>['ref'];

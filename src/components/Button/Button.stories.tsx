@@ -28,7 +28,7 @@ const VisuallyHiddenInput = styled('input')({
 });
 
 // Theme
-const theme = createTheme({ palette: { primary: { main: '#f5584d' } } });
+const theme = createTheme({ palette: { primary: { main: '#304D30' } } });
 export const CustomTheme: Story = (args: ButtonProps<any>) => (
     <ThemeProvider theme={theme}>
         <Button {...args}>Button</Button>
@@ -36,6 +36,8 @@ export const CustomTheme: Story = (args: ButtonProps<any>) => (
 );
 CustomTheme.args = {
     variant: 'contained',
+    loading: true,
+    loadingPosition: 'end',
 };
 
 export const Contained: Story = (args: ButtonProps<any>) => <Button {...args}>Button</Button>;
