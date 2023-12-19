@@ -17,7 +17,7 @@ export type ButtonOwnProps<E extends React.ElementType> = {
     startIcon?: Icon;
     endIcon?: Icon;
     disabled?: Disabled,
-    loading?: Loading | 'true' | 'false';
+    loading?: Loading;
     loadingPosition?: LoadingPosition;
     loadingIcon?: Icon;
     loadingSpeed?: LoadingSpeed;
