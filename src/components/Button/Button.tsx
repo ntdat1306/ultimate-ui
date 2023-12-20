@@ -32,32 +32,36 @@ const StyledButton = styled(ButtonBase, {
         borderRadius: theme.shape.borderRadius,
         textDecoration: 'none',
         ...(props.effect === 'rippleIn' && { overflow: 'hidden' }), // For rippleIn effect
-        ...(props.color !== 'inherit' && { outlineColor: theme.palette[props.color].main }), // For rippleOut effect
         // Size
         ...(props.size === 'small'
             ? { padding: '0.25rem 0.5rem' }
             : props.size === 'large'
             ? { padding: '0.75rem 1.5rem' }
             : { padding: '0.5rem 1rem' }),
-        // Contained and not inherit
-        ...(props.variant === 'contained'
-            ? props.color !== 'inherit' && {
-                  color: theme.palette[props.color].contrastText,
-                  backgroundColor: theme.palette[props.color].main,
-                  border: `1px solid ${theme.palette[props.color].main}`,
-                  '&:hover': {
-                      backgroundColor: theme.palette[props.color].dark,
-                      border: `1px solid ${theme.palette[props.color].dark}`,
-                  },
-                  '&:disabled': {
-                      color: theme.palette.action.disabled,
-                      backgroundColor: theme.palette.action.disabledBackground,
-                      border: `1px solid ${theme.palette.action.disabledBackground}`,
-                      pointerEvents: 'none',
-                  },
-              }
-            : {}),
-        // Outlined and not inherit
+        // Not inherit
+        ...(props.variant === 'contained' &&
+            props.color !== 'inherit' && {
+                color: theme.palette[props.color].contrastText,
+                backgroundColor: theme.palette[props.color].main,
+                border: `1px solid ${theme.palette[props.color].main}`,
+                '&:hover': {
+                    backgroundColor: theme.palette[props.color].dark,
+                    border: `1px solid ${theme.palette[props.color].dark}`,
+                },
+                '&:disabled': {
+                    color: theme.palette.action.disabled,
+                    backgroundColor: theme.palette.action.disabledBackground,
+                    border: `1px solid ${theme.palette.action.disabledBackground}`,
+                    pointerEvents: 'none',
+                },
+                // Reset on touch devices
+                '@media (hover: none)': {
+                    '&:hover': {
+                        backgroundColor: theme.palette[props.color].main,
+                        border: `1px solid ${theme.palette[props.color].main}`,
+                    },
+                },
+            }),
         ...(props.variant === 'outlined' &&
             props.color !== 'inherit' && {
                 color: theme.palette[props.color].main,
@@ -70,8 +74,13 @@ const StyledButton = styled(ButtonBase, {
                     border: `1px solid ${theme.palette.action.disabledBackground}`,
                     pointerEvents: 'none',
                 },
+                // Reset on touch devices
+                '@media (hover: none)': {
+                    '&:hover': {
+                        backgroundColor: 'transparent',
+                    },
+                },
             }),
-        // Text and not inherit
         ...(props.variant === 'text' &&
             props.color !== 'inherit' && {
                 color: theme.palette[props.color].main,
@@ -82,6 +91,12 @@ const StyledButton = styled(ButtonBase, {
                 '&:disabled': {
                     color: theme.palette.action.disabled,
                     pointerEvents: 'none',
+                },
+                // Reset on touch devices
+                '@media (hover: none)': {
+                    '&:hover': {
+                        backgroundColor: 'transparent',
+                    },
                 },
             }),
         // Inherit
@@ -102,6 +117,12 @@ const StyledButton = styled(ButtonBase, {
                     border: `1px solid ${theme.palette.action.disabledBackground}`,
                     pointerEvents: 'none',
                 },
+                // Reset on touch devices
+                '@media (hover: none)': {
+                    '&:hover': {
+                        backgroundColor: colors.tailwind.gray[300],
+                    },
+                },
             }),
             // Outlined
             ...(props.variant === 'outlined' && {
@@ -114,6 +135,12 @@ const StyledButton = styled(ButtonBase, {
                     border: `1px solid ${theme.palette.action.disabledBackground}`,
                     pointerEvents: 'none',
                 },
+                // Reset on touch devices
+                '@media (hover: none)': {
+                    '&:hover': {
+                        backgroundColor: 'transparent',
+                    },
+                },
             }),
             // Text
             ...(props.variant === 'text' && {
@@ -124,6 +151,12 @@ const StyledButton = styled(ButtonBase, {
                 '&:disabled': {
                     color: theme.palette.action.disabled,
                     pointerEvents: 'none',
+                },
+                // Reset on touch devices
+                '@media (hover: none)': {
+                    '&:hover': {
+                        backgroundColor: 'transparent',
+                    },
                 },
             }),
         }),

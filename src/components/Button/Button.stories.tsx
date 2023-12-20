@@ -27,19 +27,6 @@ const VisuallyHiddenInput = styled('input')({
     width: 1,
 });
 
-// Theme
-const theme = createTheme({ palette: { primary: { main: '#304D30' } } });
-export const CustomTheme: Story = (args: ButtonProps<any>) => (
-    <ThemeProvider theme={theme}>
-        <Button {...args}>Button</Button>
-    </ThemeProvider>
-);
-CustomTheme.args = {
-    variant: 'contained',
-    loading: true,
-    loadingPosition: 'end',
-};
-
 export const Contained: Story = (args: ButtonProps<any>) => <Button {...args}>Button</Button>;
 Contained.args = {
     variant: 'contained',
@@ -108,4 +95,23 @@ FileUpload.args = {
             />
         </svg>
     ),
+};
+
+// Loading
+export const Loading: Story = (args: ButtonProps<any>) => <Button {...args}>Button</Button>;
+Loading.args = {
+    loading: true,
+};
+
+// Theme
+const theme = createTheme({ palette: { primary: { main: '#304D30' } } });
+export const CustomTheme: Story = (args: ButtonProps<any>) => (
+    <ThemeProvider theme={theme}>
+        <Button {...args}>Button</Button>
+    </ThemeProvider>
+);
+CustomTheme.args = {
+    variant: 'contained',
+    loading: true,
+    loadingPosition: 'end',
 };
