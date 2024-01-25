@@ -16,8 +16,8 @@ const fade = keyframes`
         opacity: 0;
     }
 
-    25% {
-        box-shadow: 0 0 0 6px currentcolor;
+    70% {
+        box-shadow: 0 0 0 2px currentcolor;
         opacity: 0.2;
     }
 
